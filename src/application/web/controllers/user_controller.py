@@ -153,9 +153,9 @@ async def generate_summary(
     user_interface: UserInterface = Depends(user_service),
 ):
     summary = summary.model_dump()
-    user = auth_interface.get_current_user(current_user)
-    if user == False:
-        return HttePrequestErrors.unauthorized()
+    # user = auth_interface.get_current_user(current_user)
+    # if user == False:
+    #     return HttePrequestErrors.unauthorized()
     user_data = []
     try:
         user_data = user_interface.generate_summary(summary["patientId"], summary["data"])

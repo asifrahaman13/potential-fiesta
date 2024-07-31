@@ -48,7 +48,6 @@ export default function Example() {
                   <div className="relative z-10 flex px-2 lg:px-0">
                     <div className="flex gap-3 flex-shrink-0 items-center">
                       <img alt="Interface Image" className="h-8 w-auto" src="/images/va.svg" />
-                      <img alt="Interface Image" className="h-8 w-auto" src="/logo.png" />
                     </div>
                   </div>
                   <div className="relative z-0 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">

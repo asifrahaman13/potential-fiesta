@@ -22,4 +22,4 @@ PASSWORD_EVVA=os.getenv('PASSWORD_EVVA')
 MONGO_URI=os.getenv('MONGO_URI')
 BASE_URL=os.getenv('BASE_URL')
 
-OPENAI_KEY=os.getenv('OPENAI_KEY')
+AI71_API_KEY=os.getenv('AI71_API_KEY')

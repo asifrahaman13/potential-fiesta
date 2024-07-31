@@ -24,13 +24,16 @@ async function fetchHistory(access_token: string, patientId: string) {
 
 async function getPatientHisory(access_token: string) {
   try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/get-data`, {
-      headers: {
-        "Content-Type": "application/json",
-        APISECRET: process.env.NEXT_PUBLIC_APISECRET,
-        Authorization: `Bearer ${access_token}`,
-      },
-    });
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/get-data`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          APISECRET: process.env.NEXT_PUBLIC_APISECRET,
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
     console.log("the response is ", response);
     return response;
   } catch (err) {
@@ -50,15 +53,27 @@ function getDateString() {
   const timestamp = Date.now(); // Example timestamp
   const date = new Date(timestamp);
   const year = date.getFullYear().toString();
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
   return `${year}-${month}-${day}`;
 }
 
-
 async function saveData(access_token: string, data: any) {
-  const { details, mrn, date, dob, timestamp, gender, visitId, patient_name } = data;
-  console.log("the dtails received", details, mrn, date, dob, timestamp, gender, visitId, patient_name, getDateString(), getTimeString())
+  const { details, mrn, date, dob, timestamp, gender, visitId, patient_name } =
+    data;
+  console.log(
+    "the dtails received",
+    details,
+    mrn,
+    date,
+    dob,
+    timestamp,
+    gender,
+    visitId,
+    patient_name,
+    getDateString(),
+    getTimeString()
+  );
   try {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/store-data`,
@@ -88,7 +103,11 @@ async function saveData(access_token: string, data: any) {
   }
 }
 
-async function appendData(access_token: string, patientId: string, detail: string) {
+async function appendData(
+  access_token: string,
+  patientId: string,
+  detail: string
+) {
   try {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/append-data`,
@@ -112,7 +131,12 @@ async function appendData(access_token: string, patientId: string, detail: strin
   }
 }
 
-async function confirmSave(access_token: string, patientId: string, details: any, summary_details: any) {
+async function confirmSave(
+  access_token: string,
+  patientId: string,
+  details: any,
+  summary_details: any
+) {
   console.log(access_token, patientId, details, summary_details);
   try {
     const response = await axios.post(
@@ -148,7 +172,11 @@ async function confirmSave(access_token: string, patientId: string, details: any
   }
 }
 
-async function uploadData(access_token: string, trasncription: string, patientId: string) {
+async function uploadData(
+  access_token: string,
+  trasncription: string,
+  patientId: string
+) {
   try {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_AI_BACKEND_URL}/upload-files`,
@@ -218,11 +246,15 @@ async function sendDetailedData(access_token: string, data: any) {
   }
 }
 
-async function generateSummary(access_token: string, patientId: string,  data:any){
+async function generateSummary(
+  access_token: string,
+  patientId: string,
+  data: any
+) {
   try {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/generate-summary`,
-      { patientId, data},
+      { patientId, data },
       {
         headers: {
           "Content-Type": "application/json",
@@ -240,4 +272,14 @@ async function generateSummary(access_token: string, patientId: string,  data:an
   }
 }
 
-export { fetchHistory, getPatientHisory, saveData, appendData, confirmSave, uploadData, getSummary, sendDetailedData , generateSummary};
+export {
+  fetchHistory,
+  getPatientHisory,
+  saveData,
+  appendData,
+  confirmSave,
+  uploadData,
+  getSummary,
+  sendDetailedData,
+  generateSummary,
+};

@@ -43,24 +43,6 @@ class UserRepository:
         except Exception as e:
             print(f"An error occurred: {e}")
             return None
-    
-
-    # def get_patient_data(self, visitId: str, current_user: str):
-    #     user_data = {}
-    #     try:
-    #         with Session(self.engine) as session:
-
-    #             # Assuming you want to fetchall records, adjust the query as needed
-    #             user_data_list = select(UserData).where(
-    #                 (UserData.visitId == visitId) & (UserData.user_id == current_user)
-    #             )
-    #             results = session.exec(user_data_list).first()
-    #             session.close()
-    #             return results.model_dump()
-    #     except Exception as e:
-    #         print(e)
-
-    #     return user_data
 
     # Append item to dictionary array
     def append_to_field_array(
@@ -97,21 +79,13 @@ class UserRepository:
             return True
         except Exception as e:
             return False
-
-    def get_summary(self, visitId: str):
-        user_data = {}
+    
+    def insert_field(self, collection_name: str, field_name: str, field_value: str, new_filed_name_to_add: str, new_field_value_to_add: str):
         try:
-            with Session(self.engine_evva) as session:
-                # Assuming you want to fetchall records, adjust the query as needed
-                user_data_list = select(VeteranData).where(
-                    VeteranData.patient_id == visitId
-                )
-                results = session.exec(user_data_list).first()
-
-                user_data = results.result
-
-                session.close()
+            collection = self.__database[collection_name]
+            result = collection.update_one(
+                {field_name: field_value}, {"$set": {new_filed_name_to_add: new_field_value_to_add}}
+            )
+            return result
         except Exception as e:
-            print(e)
-
-        return user_data
+            return False

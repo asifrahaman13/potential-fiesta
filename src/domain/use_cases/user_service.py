@@ -1,10 +1,11 @@
-from typing import Any, Dict, List
-from config.config import OPENAI_KEY
+import json
+from typing import Any, Dict
+from config.config import AI71_API_KEY
 from src.domain.entities.user import PatientData
 from src.domain.interfaces.user_interface import UserInterface
 from src.infastructure.repositories.user_repository import UserRepository
 from fastapi.security import OAuth2PasswordBearer
-from openai import OpenAI
+from ai71 import AI71
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
@@ -54,13 +55,17 @@ class UserService(UserInterface):
     # API to get all the patients of the doctor.
     def get_data(self, current_user: str):
         # return self.user_repository.get_data(current_user)
-    
-        return self.user_repository.find_all_entities_by_field_name("patient_data", "doctor_username", current_user)
+
+        return self.user_repository.find_all_entities_by_field_name(
+            "patient_data", "doctor_username", current_user
+        )
 
     def get_patient_data(self, patient_id: str, current_user: str):
         # return self.user_repository.get_patient_data(patient_id, current_user)
-        
-        return self.user_repository.find_single_entity_by_field_name("patient_data", "visitId", patient_id)
+
+        return self.user_repository.find_single_entity_by_field_name(
+            "patient_data", "visitId", patient_id
+        )
 
     def generate_summary(self, patient_id: str, data: list[str]):
 
@@ -73,7 +78,7 @@ class UserService(UserInterface):
        - Summmary
        - Subjective 
        - Objective 
-       - Assessments
+       - Assessment
        - Plans
       \n
 
@@ -89,15 +94,26 @@ class UserService(UserInterface):
             },
         )
 
-        client = OpenAI(api_key=OPENAI_KEY)
+        client = AI71(api_key=AI71_API_KEY)
         completion = client.chat.completions.create(
-            model="gpt-4o",
+            model="tiiuae/falcon-180b-chat",
             messages=messages,
-            max_tokens=50,
-            temperature=0.2,
+            max_tokens=1000,
+            temperature=0.7,
         )
-        print(completion.choices[0].message.content)
-        return completion.choices[0].message.content
+        raw_string = (
+            completion.choices[0].message.content.strip("```json\n").strip("```")
+        )
+        print(raw_string)
+
+        json_object = json.loads(raw_string)
+
+        result = self.user_repository.insert_field(
+            "patient_data", "visitId", patient_id, "summary", json_object
+        )
+
+        if result:
+            return json_object
 
     def get_summary(self, patient_id: str):
-        return self.user_repository.get_summary(patient_id)
+        return self.user_repository.find_single_entity_by_field_name("patient_data", "visitId", patient_id)["summary"]
