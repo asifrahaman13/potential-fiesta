@@ -23,21 +23,6 @@ class UserRepository:
         connect_args = {}
         self.engine = create_engine(DATABASE_URL, echo=True, connect_args=connect_args)
 
-        self.db_params_evva = {
-            "host": HOST_EVVA,
-            "dbname": DBNAME_EVVA,
-            "user": "visitcompanion",
-            "password": PASSWORD_EVVA,
-        }
-        self.encoded_password_evva = quote(self.db_params_evva["password"])
-        # self.encoded_password = quote(self.db_params["password"])
-        DATABASE_URL_EVVA = f"postgresql://{self.db_params_evva['user']}:{self.encoded_password_evva}@{self.db_params_evva['host']}:{5432}/{self.db_params_evva['dbname']}"
-        connect_args = {}
-        self.engine_evva = create_engine(DATABASE_URL_EVVA, echo=True, connect_args=connect_args)
-        
-        # The following line of code is very important to actually create table corresponding to the ORMs.
-        # SQLModel.metadata.create_all(self.engine)
-
     def check_user(self, membername: str, memberpass: str) -> bool:
         with Session(self.engine) as session:
             statement = select(Vadata).where(Vadata.membername == membername)
