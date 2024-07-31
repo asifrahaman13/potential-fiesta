@@ -39,7 +39,7 @@ export default function Example() {
 
   return (
     <>
-      <div className={`flex flex-col h-screen overflow-x-hidden `}>
+      <div className={`flex flex-col h-screen overflow-x-hidden overflow-y-hidden `}>
         <Disclosure as="header" className="bg-white shadow border border-gray-100">
           {({ open }) => (
             <>

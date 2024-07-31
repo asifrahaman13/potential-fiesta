@@ -217,7 +217,7 @@ const History: React.FC<PageProps> = ({ patientId, patientName }) => {
                     </div>
 
                     <textarea
-                      className="text-gray-600 mt-4 outline-none w-full h-auto flex flex-wrap"
+                      className="text-gray-600 mt-4 outline-none w-full h-auto flex flex-wrap break-words word-wrap"
                       value={historySlice?.summary.summary}
                       onChange={(e) => {
                         dispatch(
@@ -227,7 +227,8 @@ const History: React.FC<PageProps> = ({ patientId, patientName }) => {
                           })
                         );
                       }}
-                      rows={10}
+                      rows={8}
+                      
                     ></textarea>
                   </div>
 
@@ -278,7 +279,7 @@ const History: React.FC<PageProps> = ({ patientId, patientName }) => {
                             })
                           );
                         }}
-                        rows={10}
+                        rows={5}
                       ></textarea>
                     </>
                   </div>
@@ -341,7 +342,7 @@ const History: React.FC<PageProps> = ({ patientId, patientName }) => {
                     className="bg-white p-4 rounded-md mb-4 transition duration-300 ease-in-out"
                   >
                     <div className="flex items-center justify-between cursor-pointer">
-                      <h2 className="text-lg font-semibold">Assessments </h2>
+                      <h2 className="text-lg font-semibold">Assessment </h2>
                       <img
                         src="/images/UI icon_info_filled.svg"
                         alt=""
@@ -386,6 +387,7 @@ const History: React.FC<PageProps> = ({ patientId, patientName }) => {
                           })
                         );
                       }}
+                      rows={4}
                     ></textarea>
                   </div>
 
@@ -439,6 +441,7 @@ const History: React.FC<PageProps> = ({ patientId, patientName }) => {
                           })
                         );
                       }}
+                      rows={4}
                     ></textarea>
                   </div>
                 </div>

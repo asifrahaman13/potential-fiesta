@@ -277,7 +277,7 @@ const Visits = () => {
           ))}
 
           <div className="w-full flex flex-col gap-0 p-4 mt-auto">
-            <div className="mt-auto flex w-full p-2 gap-1">
+            <div className="mt-auto flex w-full p-6 gap-1">
               <img src="/images/visits/settings.svg" alt="" />
               <div>Settings</div>
             </div>

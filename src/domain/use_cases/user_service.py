@@ -74,12 +74,12 @@ class UserService(UserInterface):
         messages.append(
             {
                 "role": "system",
-                "content": """You are a helpful assistant. Your job is to provide a detailed summary on the content provided by the user. Your response should be in the form of json response. The keys of the json data should be as follows: 
-       - Summmary
-       - Subjective 
-       - Objective 
-       - Assessment
-       - Plans
+                "content": """You are a helpful assistant. Your job is to provide a detailed summary on the content provided by the user. Your response should be in the form of json response. The keys of the json data should be as follows: \n
+       - summmary
+       - subjective 
+       - objective 
+       - assessment
+       - plan
       \n
 
       
