@@ -21,14 +21,14 @@ export const allHistorySlice = createSlice({
       const { previousHistory } = action.payload;
       state.patientDetails = previousHistory;
       console.log("The data is ")
-      console.log(JSON.parse(JSON.stringify(state.patientDetails)));
-      console.log(state.patientDetails);
+      // console.log(JSON.parse(JSON.stringify(state.patientDetails)));
+      console.log("sadfsadf", state.patientDetails);
     },
     appendCurrentHistory: (state, action) => {
       const { newData } = action.payload;
       console.log(newData)
       state.patientDetails.push(newData);
-      console.log(JSON.parse(JSON.stringify(state.patientDetails)));
+      // console.log(JSON.parse(JSON.stringify(state.patientDetails)));
       console.log(state.patientDetails);
     },
   },

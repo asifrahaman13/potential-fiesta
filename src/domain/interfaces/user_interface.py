@@ -34,15 +34,3 @@ class UserInterface(ABC):
     @abstractmethod
     def get_summary(self, patient_id: str):
         pass
-
-    @abstractmethod
-    def inform_login(self, username: str):
-        pass
-
-    @abstractmethod
-    def save_detailed_data(self, patient_id:str, prev):
-        pass
-
-    @abstractmethod
-    def update_transctiption(self, patient_id:str, details, summary):
-        pass

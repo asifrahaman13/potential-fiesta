@@ -65,11 +65,13 @@ const History: React.FC<PageProps> = ({ patientId, patientName }) => {
           }
           const response = await fetchHistory(access_token, patientId);
           if (response?.status === 200) {
-            console.log(response.data);
+            console.log("The history################", response.data);
             setDate(response.data.date);
             setPatientData(response.data);
             if (response?.data.details) {
+              console.log("###############################", response?.data.details);
               dispatch(setTranscriptions({ details: response?.data.details }));
+              console.log(response?.data.details);
             }
           }
         }

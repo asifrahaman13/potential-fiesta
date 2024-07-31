@@ -13,6 +13,7 @@ async function fetchHistory(access_token: string, patientId: string) {
         },
       }
     );
+
     if (response && response.status === 200) {
       return response;
     }
@@ -30,6 +31,7 @@ async function getPatientHisory(access_token: string) {
         Authorization: `Bearer ${access_token}`,
       },
     });
+    console.log("the response is ", response);
     return response;
   } catch (err) {
     console.log(err);

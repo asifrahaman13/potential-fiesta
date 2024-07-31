@@ -75,8 +75,6 @@ async def store_data(
         patient = patient.model_dump()
         current_user = auth_interface.get_current_user(current_user)
         patient["user_id"] = current_user
-        # current_date = datetime.now().strftime("%Y-%m-%d")
-        # patient["date"] = current_date
         is_stored = user_interface.store_data(current_user, patient)
   
         return is_stored
@@ -103,6 +101,8 @@ async def store_data(
         return False
 
 
+
+# Router to get the history of all the patients of the doctor.
 @router.get("/get-data")
 async def get_data(
     current_user: str = Depends(get_current_user),
@@ -120,7 +120,7 @@ async def get_data(
 
     return user_data
 
-
+# Router to get the patient data of a particular patient including the history of the patient.
 @router.post("/get-patient")
 async def get_data(
     patient_id: UserData,
@@ -165,8 +165,6 @@ async def generate_summary(
     return user_data
 
 
-
-
 @router.post("/get-summary")
 async def get_summary(
     patient_id: UserData,  # Annotate patient_id as a string
@@ -185,26 +183,6 @@ async def get_summary(
         return HttePrequestErrors.internal_server_error()
 
     return user_data
-
-
-@router.post("/store-for-csv-data")
-async def store_data(
-    patient: PatientData,
-    current_user: str = Depends(get_current_user),
-    auth_interface: AuthInterface = Depends(auth_service),
-    user_interface: UserInterface = Depends(user_service),
-):
-    print(patient)
-    try:
-        patient = patient.model_dump()
-        current_user = auth_interface.get_current_user(current_user)
-        store_csv_data=user_interface.save_detailed_data(patient['visitId'], patient['prev'])
-        return store_csv_data
-    except Exception as e:
-        print(e)
-
-    return False
-
 
 @router.post("/update-transcript")
 async def update_transcript( patient: PatientDataUpdate,
