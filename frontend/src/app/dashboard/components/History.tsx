@@ -66,7 +66,7 @@ const History: React.FC<PageProps> = ({ patientId, patientName }) => {
     GetPatientHisory();
   }, [dispatch, patientId]);
 
-  const [header, setHeader] = useState("");
+  const [header, setHeader] = useState("notes");
 
   function handleheaderChange(header: string) {
     setHeader(header);
@@ -108,10 +108,10 @@ const History: React.FC<PageProps> = ({ patientId, patientName }) => {
                       </div>
                       <div>
                         <span className="text-gray-700">Last Visit: </span>
-                        <span>1 August </span>
+                        <span>{date} </span>
                       </div>
                     </div>
-                    <div className="flex gap-8">
+                    <div className="flex gap-8 items-center">
                       <button
                         className="flex items-center justify-center gap-2 "
                         onClick={(e) => {
@@ -119,27 +119,27 @@ const History: React.FC<PageProps> = ({ patientId, patientName }) => {
                         }}
                       >
                         <img src="/images/visits/notes.svg" alt="" />
-                        <div className="border-b-2 border-indigo-500 ">
+                        <div className={`${header == "notes" ? "border-b-2 border-indigo-500" : ""}  `}>
                           Notes
                         </div>
                       </button>
                       <button
-                        className="flex items-center justify-center gap-2"
+                        className={` flex flex-row gap-2 items-center`}
                         onClick={(e) => {
                           handleheaderChange("qr-code");
                         }}
                       >
                         <img src="/images/visits/documentation.svg" alt="" />
-                        <div className="text-gray-500">QR CODE</div>
+                        <div className={`${header == "qr-code" ? "border-b-2 border-indigo-500" : ""} flex flex-row gap-2 items-center`}>QR CODE</div>
                       </button>
                       <button
-                        className="flex items-center justify-center gap-2"
+                        className={` flex flex-row gap-2 items-center`}
                         onClick={(e) => {
                           handleheaderChange("patient_data");
                         }}
                       >
                         <img src="/images/visits/instructions.svg" alt="" />
-                        <div className="text-gray-500">PATIENT DATA</div>
+                        <div className={`${header == "patient_data" ? "border-b-2 border-indigo-500" : ""} flex flex-row gap-2 items-center`}>PATIENT DATA</div>
                       </button>
                     </div>
                   </div>
