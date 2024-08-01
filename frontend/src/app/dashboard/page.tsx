@@ -3,20 +3,18 @@
 import Visits from "./components/Visits";
 import { Fragment } from "react";
 import { RootState } from "@/lib/store";
-import React, { useState } from "react";
+import React from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import Integrations from "./components/Integrations";
 import Reports from "./components/Reports";
 import { useDispatch, useSelector } from "react-redux";
 import { toogleChanges } from "@/lib/features/workspace/workSpaceHeaderSlice";
-import { newPatient } from "@/lib/features/dashboard/pollsSlice";
 
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { navigation, userNavigation, classNames, user } from "@/static/dashboard";
 
 export default function Example() {
   const workspaceHeader = useSelector((state: RootState) => state.workspaceHeader);
-  const [publish, setPublish] = useState("Publish");
   const dispatch = useDispatch();
 
   const renderSection = () => {
