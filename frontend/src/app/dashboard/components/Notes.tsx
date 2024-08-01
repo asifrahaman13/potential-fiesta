@@ -264,7 +264,7 @@ const Notes = ({ patientId }: Patient) => {
       <div className="w-full flex justify-end ">
         <div className="bg-purple-500 rounded-xl flex p-4 gap-2">
           <img
-            src="/images/upload.svg" // Path to your image file inside the public directory
+            src="/images/upload.svg"
             alt="Interface Image"
           />
           <button

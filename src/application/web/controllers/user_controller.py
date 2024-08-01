@@ -3,7 +3,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from src.domain.interfaces.user_interface import UserInterface
 from src.domain.use_cases.user_service import UserService
-from src.infastructure.repositories.user_repository import UserRepository
+from src.infastructure.repositories.database_repository import DatabaseRepository
 from fastapi.security import OAuth2PasswordBearer
 from datetime import datetime, timedelta
 from src.domain.entities.user import UserBase, UserData, PatientData, PatientDataUpdate
@@ -16,7 +16,7 @@ from src.infastructure.exceptions.exceptions import HttePrequestErrors
 
 router = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-user_repository = UserRepository()
+user_repository = DatabaseRepository()
 user_service = UserService(user_repository)
 auth_repository = AuthRepository()
 auth_service = AuthenticationService()

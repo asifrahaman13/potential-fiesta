@@ -1,15 +1,8 @@
-# src/infrastructure/repositories/user_repository.py
-
+import logging
 from typing import Any, Dict, List
-from src.domain.entities.user import UserData, Vadata, VeteranData
-from sqlmodel import Session, create_engine, select
-from urllib.parse import quote
-from src.domain.entities.user import PatientData, InformLogin
-from datetime import datetime
 from pymongo import MongoClient
 
-
-class UserRepository:
+class DatabaseRepository:
 
     def __init__(self):
         self.__client = MongoClient("mongodb://localhost:27017/")
@@ -89,3 +82,27 @@ class UserRepository:
             return result
         except Exception as e:
             return False
+        
+    
+    def append_entity_to_array(
+        self,
+        field: str,
+        field_value: str,
+        array_field: str,
+        data: Dict[str, int],
+        collection_name: str,
+    ):
+        try:
+            # Define the collection where the data will be stored
+            collection = self.__database[collection_name]
+
+            # Append the data to the array
+            collection.update_one({field: field_value}, {"$push": {array_field: data}})
+
+            # Return the data that was stored
+            return True
+        except Exception as e:
+            logging.error(f"Failed to append data: {e}")
+            return False
+
+    
