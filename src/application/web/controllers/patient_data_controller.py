@@ -59,3 +59,12 @@ async def websocket_endpoint(
 
         # Disconnect the websocket
         await manager.disconnect(websocket)
+
+
+@pateiend_router.get("/patient-graphs/{patient_id}")
+async def get_patient(patient_id: str):
+    patient = database_repository.find_single_entity_by_field_name(
+        "patient_data", "user_id", patient_id
+    )
+    return patient["data"]
+
