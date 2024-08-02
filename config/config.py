@@ -23,5 +23,6 @@ MONGO_URI=os.getenv('MONGO_URI')
 BASE_URL=os.getenv('BASE_URL')
 
 AI71_API_KEY=os.getenv('AI71_API_KEY')
+AI71_BASE_URL=os.getenv('AI71_BASE_URL')
 
 OPEN_AI_API_KEY=os.getenv('OPENAI_KEY')

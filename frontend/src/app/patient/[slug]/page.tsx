@@ -101,13 +101,15 @@ export default function Page({ params }: { params: { slug: string } }) {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-white p-4">
+    <div className="flex flex-col h-screen  p-4 items-center bg-gray-200">
+
+      <div className="w-1/3 h-full bg-white p-4 rounded-lg">
       <div className="flex justify-center mb-4">
         <h1 className="text-2xl font-bold text-blue-600">{slug}</h1>
       </div>
 
       {messages.length === 0 && (
-        <div className="flex flex-col items-center justify-center h-3/5">
+        <div className="flex flex-col items-center justify-center h-4/5">
           <img
             src={"/images/bot.jpg"}
             alt="Bot"
@@ -135,7 +137,7 @@ export default function Page({ params }: { params: { slug: string } }) {
       </div>
 
       {isConnected ? (
-        <div className="flex items-center">
+        <div className="flex items-center ">
           <input
             className="flex-1 p-2 border border-gray-300 rounded-lg mr-2 bg-white text-black"
             value={message}
@@ -154,6 +156,7 @@ export default function Page({ params }: { params: { slug: string } }) {
           <p className="text-gray-500">Connection Screen</p>
         </div>
       )}
+      </div>
     </div>
   );
 }

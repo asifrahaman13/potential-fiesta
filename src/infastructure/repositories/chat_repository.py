@@ -1,19 +1,15 @@
 import json
 import logging
 from config.config import OPEN_AI_API_KEY
+from src.constants.prompts import Prompts
+import re
 from openai import OpenAI
-from src.domain.entities.chat import HealthData
-from langchain.output_parsers import PydanticOutputParser
-from langchain.prompts import ChatPromptTemplate, HumanMessagePromptTemplate
-from src.constants.prompts import Format, Prompts
+from config.config import AI71_API_KEY, AI71_BASE_URL
 
 # Configure logging
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
-
-import re
-from langchain_openai import ChatOpenAI
 
 
 def detect_summary(text):
@@ -21,73 +17,78 @@ def detect_summary(text):
     matches = re.findall(pattern, text)
     return bool(matches)
 
+
 class HealthAssistant:
     def __init__(self):
-        self.__model = "gpt-4o"
-        self.__openai_api_key = OPEN_AI_API_KEY
-        self.__max_tokens = 3000
-        self.chat_model = ChatOpenAI(
-            model=self.__model,
-            openai_api_key=self.__openai_api_key,
-            max_tokens=self.__max_tokens,
+        self.__model = "tiiuae/falcon-180B-chat"
+        self.__client = OpenAI(
+            api_key=AI71_API_KEY,
+            base_url=AI71_BASE_URL,
         )
 
-    def process_output(self, output):
-
-        # Extract the JSON content
-        json_content = output.content.strip("```json\n").strip("```")
+    def parse_output(self, raw_data: str):
         try:
-            return json.loads(json_content)
-        except json.JSONDecodeError as e:
-            logging.error(f"Failed to parse JSON: {e}")
+            json_decoded_result = json.loads(raw_data)
+            return json_decoded_result
+        except Exception as e:
+            logging.error(f"Error parsing output: {e}")
             return None
 
-    def format_input(self, user_query):
-
-        # Create a prompt
-        parser = PydanticOutputParser(pydantic_object=HealthData)
-
-        # Create a prompt
-        prompt = ChatPromptTemplate(
+    def process_output(self, raw_data: str):
+        # Streaming invocation:
+        response = self.__client.chat.completions.create(
             messages=[
-                HumanMessagePromptTemplate.from_template(
-                    Format.HEALTH_ASSISTANT_FORMAT_PROMPT.value
-                )
+                {
+                    "role": "system",
+                    "content": """You are a helpful and friendly assistant. Your job is to extract the details from the user provided data and format that into json. Only give the json response. There should be keys and values. No need to give any form of units. If any value is not provided just make the value as 0. The keys should be as follows:  \n
+                    - systol_blood_pressure
+                    - diastol_blood_pressure
+                    - heart_rate
+                    - respiratory_rate
+                    - blood_temperature
+                    - step_count
+                    - calories_burned
+                    - distance_travelled
+                    - sleep_duration
+                    - water_consumed
+                    - caffeine_consumed
+                    - alcohol_consumed\n
+                        
+                        Examples: 
+
+                        {
+                            "systol_blood_pressure": 120,
+                            "diastol_blood_pressure": 80,
+                            "heart_rate": 72,
+                            "respiratory_rate": 18,
+                            "blood_temperature": 37,
+                            "step_count": 5000,
+                            "calories_burned": 300,
+                            "distance_travelled": 4.83,
+                            "sleep_duration": 7,
+                            "water_consumed": 2,
+                            "caffeine_consumed": 150,
+                            "alcohol_consumed": 44.36
+                        }
+                        
+                
+                """,
+                },
+                {
+                    "role": "user",
+                    "content": raw_data,
+                },
             ],
-            # Define the input variables
-            input_variables=["question"],
-            partial_variables={"format_instructions": parser.get_format_instructions()},
+            model=self.__model,
         )
-        return prompt.format_prompt(question=user_query)
 
+        output = response.choices[0].message.content
 
-        # Create a prompt
-        parser = PydanticOutputParser(pydantic_object=GeneralParameters)
+        print(output)
 
-        # Create a prompt
-        prompt = ChatPromptTemplate(
-            messages=[
-                HumanMessagePromptTemplate.from_template(
-                    Format.FORMAT_USER_GENERAL_METRICS_PROMPT.value
-                )
-            ],
-            # Define the input variables
-            input_variables=["question"],
-            partial_variables={"format_instructions": parser.get_format_instructions()},
-        )
-        return prompt.format_prompt(question=user_query)
+        result = self.parse_output(output)
 
-    def run_health_assistant(self, user_query):
-
-        # Format the input
-        input_prompt = self.format_input(user_query)
-
-        # Invoke the model
-        output = self.chat_model.invoke(input_prompt.to_messages())
-
-        # Process the output
-        return self.process_output(output)
-
+        return result
 
 
 class ChatResponseRepository:
@@ -125,7 +126,7 @@ class ChatResponseRepository:
         # Check if the response is a summary
         if detect_summary(response):
             assistant = HealthAssistant()
-            health_data = assistant.run_health_assistant(response)
+            health_data = assistant.process_output(response)
             logging.info(health_data)
 
             return {
@@ -133,5 +134,4 @@ class ChatResponseRepository:
                 "response": response,
                 "response_schema": health_data,
             }
-
         return {"summary": False, "response": response}
