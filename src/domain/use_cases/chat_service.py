@@ -19,7 +19,16 @@ class ChatService:
         self.chat_repository = chat_repository
         self.database_repository = database_repository
 
-    def chat_response(self, user, query, all_messages):
+    def chat_response(self, user, password: str, query, all_messages):
+
+        user_data=self.database_repository.find_single_entity_by_field_name("patient_data", "mrn", user)
+
+        if user_data is None:
+            return "User not found"
+        
+        if user_data["qr"]["password"] != password:
+            return "Invalid password"
+    
 
         # Get the chat response
         response = self.chat_repository.chat_response(query, all_messages)
@@ -32,7 +41,7 @@ class ChatService:
                 if_data_exists = (
                     self.database_repository.find_single_entity_by_field_name(
                         "patient_data",
-                        "user_id",
+                        "mrn",
                         user,
                     )
                 )
@@ -43,7 +52,7 @@ class ChatService:
                 # Save the chat response
                 if if_data_exists is not None:
                     self.database_repository.append_entity_to_array(
-                        "user_id",
+                        "mrn",
                         user,
                         "data",
                         response["response_schema"],

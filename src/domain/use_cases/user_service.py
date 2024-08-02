@@ -36,7 +36,6 @@ class UserService(UserInterface):
 
     # Append the transcription data to the existing data
     def append_data(self, current_user: str, data: Dict[str, Any]):
-        print("Appending data:", data)
         # Call the method to append a new element to the 'details' array
         result = self.database_repository.append_to_field_array(
             "patient_data",  # Collection name

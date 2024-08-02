@@ -6,7 +6,7 @@ class ChatInterface(ABC):
 
     @abstractmethod
     def chat_response(
-        self, user: str, query: str, all_messages: List[Dict[str, str]]
+        self, user: str,password: str, query: str, all_messages: List[Dict[str, str]]
     ) -> None:
         """Generate a chat response based on the user, query, and previous messages."""
         pass

@@ -43,7 +43,7 @@ async def websocket_endpoint(
 
             # Create a chat response
             chat_response = chat_interface.chat_response(
-                "user", data["query"], all_messages
+              client_id, data["password"], data["query"], all_messages
             )
 
             # Log the response
