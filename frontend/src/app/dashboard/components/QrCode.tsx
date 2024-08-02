@@ -43,22 +43,27 @@ const QRCodeGenerator = () => {
 
   return (
     <React.Fragment>
-      <div>
-        <div className="bg-white rounded-lg h-full">
-        <div className="w-full  flex justify-center items-center">
-          <div className="flex flex-col gap-4">
-            <p className="font-semibold text-xl">QR code</p>
-            <div className="text-lg font-semibold">URL</div>
-            <div>{url}</div>
-            <div className="text-lg font-semibold">Password</div>
-            <div>{password}</div>
-            <div className="">{url && <QRCode value={url} size={250} />}</div>
+      <div className="flex justify-center items-center  bg-gray-100 p-4">
+        <div className="bg-white rounded-lg shadow-lg w-full max-w-md">
+          <div className="w-full flex justify-center items-center p-6">
+            <div className="flex flex-col gap-4 w-full">
+              <p className="font-semibold text-2xl text-center text-gray-800">
+                QR Code
+              </p>
+              <div className="text-lg font-semibold text-gray-700">URL</div>
+              <div className="text-gray-600 truncate">{url}</div>
+              <div className="text-lg font-semibold text-gray-700">
+                Password
+              </div>
+              <div className="text-gray-600">{password}</div>
+              <div className="flex justify-center mt-4">
+                {url && <QRCode value={url} size={250} />}
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="flex flex-row justify-center">
-          <div>
+          <div className="flex justify-center p-6 border-t border-gray-200">
             <button
-              className="rounded-lg bg-white px-4 py-2 text-gray-500 font-semibold"
+              className="rounded-lg bg-indigo-600 px-4 py-2 text-white hover:bg-blue-700 transition duration-200"
               onClick={() => {
                 confirm();
               }}
@@ -66,7 +71,6 @@ const QRCodeGenerator = () => {
               Confirm
             </button>
           </div>
-        </div>
         </div>
       </div>
     </React.Fragment>

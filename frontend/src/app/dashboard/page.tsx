@@ -84,22 +84,6 @@ export default function Example() {
                         
                           <div className=" text-medium text-Gray font-semibold">Reports</div>
                         </button>
-
-                        {/* <div className="w-full items-center flex flex-row justify-end">
-                    <div>
-                      {publish === "Publish" && (
-                        <button
-                          className="bg-white flex items-center justify-around border-2 border-spacing-2 border-dotted border-Ind text-Ind m-2  w-32 rounded-xl pl-4 pr-4 pt-2 pb-2"
-                          onClick={() => dispatch(newPatient())}
-                        >
-                          <img src="/images/plus.svg" alt="" />
-                          <div className="text-Ind"> New Visit</div>
-                        </button>
-                      )}
-
-                      {publish === "Publishing" && <button className="bg-Pri-Dark bg-opacity-50 m-2 text-white w-32 rounded-xl pl-4 pr-4 pt-2 pb-2">Publishing</button>}
-                    </div>
-                  </div> */}
                       </nav>
                     </div>
                   </div>

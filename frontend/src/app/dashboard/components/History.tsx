@@ -118,8 +118,8 @@ const History: React.FC<PageProps> = ({ patientId, patientName }) => {
                           handleheaderChange("notes");
                         }}
                       >
-                        <img src="/images/visits/notes.svg" alt="" />
-                        <div className={`${header == "notes" ? "border-b-2 border-indigo-500" : ""}  `}>
+                        <img src="/images/visits/review.svg" alt="" />
+                        <div className={`${header == "notes" ? "border-b-2 border-indigo-500" : ""} font-semibold text-gray-500 `}>
                           Notes
                         </div>
                       </button>
@@ -130,7 +130,7 @@ const History: React.FC<PageProps> = ({ patientId, patientName }) => {
                         }}
                       >
                         <img src="/images/visits/documentation.svg" alt="" />
-                        <div className={`${header == "qr-code" ? "border-b-2 border-indigo-500" : ""} flex flex-row gap-2 items-center`}>QR CODE</div>
+                        <div className={`${header == "qr-code" ? "border-b-2 border-indigo-500" : ""} font-semibold text-gray-500 flex flex-row gap-2 items-center`}>QR Code</div>
                       </button>
                       <button
                         className={` flex flex-row gap-2 items-center`}
@@ -139,7 +139,7 @@ const History: React.FC<PageProps> = ({ patientId, patientName }) => {
                         }}
                       >
                         <img src="/images/visits/instructions.svg" alt="" />
-                        <div className={`${header == "patient_data" ? "border-b-2 border-indigo-500" : ""} flex flex-row gap-2 items-center`}>PATIENT DATA</div>
+                        <div className={`${header == "patient_data" ? "border-b-2 border-indigo-500" : ""} font-semibold text-gray-500 flex flex-row gap-2 items-center`}>Patient data</div>
                       </button>
                     </div>
                   </div>

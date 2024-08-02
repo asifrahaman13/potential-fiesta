@@ -122,14 +122,14 @@ export default function Page({ params }: { params: { slug: string } }) {
                 type="text"
                 id="code"
                 onChange={handleChange}
-                className="w-full p-2 mt-2 border rounded-lg"
+                className="w-full p-2 mt-2 border rounded-lg outline-none bg-white"
                 placeholder="Enter code here"
               />
             </div>
           </div>
         </div>
 
-        <div className="flex-1 w-full bg-gray-50 p-4 rounded-lg overflow-y-auto mb-4">
+        <div className="flex-1 w-full  p-4 rounded-lg overflow-y-auto mb-4">
           {messages.length === 0 && (
             <div className="flex flex-col items-center justify-center h-full">
               <img
@@ -155,7 +155,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 
               {item.type !== "client" && (
                 <div className="flex flex-row justify-start mb-2">
-                  <div className="rounded-md w-4/5 bg-gray-300 text-black p-2">
+                  <div className="rounded-md w-4/5 bg-gray-100 text-black p-2">
                     <Markdown className="text-base">{item.message}</Markdown>
                   </div>
                 </div>
