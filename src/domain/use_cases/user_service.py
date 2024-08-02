@@ -117,3 +117,6 @@ class UserService(UserInterface):
 
     def get_summary(self, patient_id: str):
         return self.database_repository.find_single_entity_by_field_name("patient_data", "visitId", patient_id)["summary"]
+    
+    def update_qr(self, patient_id: str, data: dict):
+        return self.database_repository.insert_field("patient_data", "mrn", patient_id, "qr", data)

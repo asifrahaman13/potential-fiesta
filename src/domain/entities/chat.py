@@ -30,3 +30,14 @@ class HealthData(BaseModel):
     water_consumed: int = Field(description="The amount of water consumed in litres")
     caffeine_consumed: int = Field(description="The amount of caffeine consumed in mg")
     alcohol_consumed: int = Field(description="The amount of alcohol consumed in units")
+
+
+class Summary(BaseModel):
+    patientId: str
+    data: list[str]
+
+
+class QrData(BaseModel):
+    mrn: str
+    url: str
+    password: str
