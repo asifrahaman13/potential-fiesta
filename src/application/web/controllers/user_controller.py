@@ -140,6 +140,23 @@ async def get_data(
         return HttePrequestErrors.internal_server_error()
     return user_data
 
+@router.post("/get-patient-visits")
+async def get_data(
+    patient_id: UserData,
+    current_user: str = Depends(get_current_user),
+    auth_interface: AuthInterface = Depends(auth_service),
+    user_interface: UserInterface = Depends(user_service),
+):
+    print(patient_id)
+    patient_id = patient_id.model_dump()
+    user_data = {}
+    try:
+        current_user = auth_interface.get_current_user(current_user)
+        user_data = user_interface.get_patient_visits(patient_id["mrn"], current_user)
+    except Exception as e:
+        return HttePrequestErrors.internal_server_error()
+    return user_data
+
 
 @router.post("/generate-summary")
 async def generate_summary(

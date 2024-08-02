@@ -67,4 +67,3 @@ async def get_patient(patient_id: str):
         "patient_data", "user_id", patient_id
     )
     return patient["data"]
-

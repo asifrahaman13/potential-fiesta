@@ -40,8 +40,7 @@ function getDateString() {
     console.log(formatCurrDate)
     dispatch(appendCurrentHistory({ newData: pollsSlice.patientDetails }));
     dispatch(setPatientData({ name: "timestamp", value: formattedTime }));
-    dispatch(setPatientData({ name: "date", value: formatCurrDate }));
-    console.log("the data+++++++++++++++++++++++++++", pollsSlice.patientDetails);
+    dispatch(setPatientData({ name: "date", value: formatCurrDate })); 
     try {
        const access_token = localStorage.getItem("access_token") || "";
       const response = await saveData(access_token, pollsSlice.patientDetails);
@@ -49,7 +48,6 @@ function getDateString() {
     } catch (err) {
       console.log(err);
     }
-   
   }
 
   return (

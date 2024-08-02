@@ -17,6 +17,7 @@ import QrCode from "./QrCode";
 import PatientGraphs from "./PatientGraphs";
 
 const History: React.FC<PageProps> = ({ patientId, patientName }) => {
+  console.log(patientId)
   const historySlice = useSelector((state: RootState) => state.history);
   const [date, setDate] = useState("");
   const dispatch = useDispatch();
@@ -80,7 +81,7 @@ const History: React.FC<PageProps> = ({ patientId, patientName }) => {
           <>
             <div className="w-full flex items-center justify-center">
               Nothing to display. Please click on the New visit tab to start
-              creating one.
+              creating one. Or you can find your patient by searching from the left.
             </div>
           </>
         )}

@@ -9,5 +9,6 @@ export interface HistoryItem {
   id: string;
   patient_id: string;
   patient_name: string;
-  details: string[]; // Changed to match the type in the interface
+  details: string[];
+  timestamp: string;
 }

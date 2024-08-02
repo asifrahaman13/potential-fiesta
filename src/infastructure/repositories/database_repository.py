@@ -26,11 +26,14 @@ class DatabaseRepository:
             collection = self.__database[collection_name]
             result_cursor = collection.find({field_name: field_value})
 
+            print(f"Found {result_cursor} results")
+
             # Convert cursor to list and ensure _id is a string
             result_list = []
             for item in result_cursor:
                 item["_id"] = str(item["_id"])  # Convert ObjectId to string
                 result_list.append(item)
+                print("####################################", item)
 
             return result_list
         except Exception as e:

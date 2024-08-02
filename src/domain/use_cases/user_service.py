@@ -65,6 +65,11 @@ class UserService(UserInterface):
         return self.database_repository.find_single_entity_by_field_name(
             "patient_data", "visitId", patient_id
         )
+    
+    def get_patient_visits(self, mrn: str, current_user: str):
+        result=self.database_repository.find_all_entities_by_field_name("patient_data", "mrn", mrn)
+        print(len(result))
+        return result
 
     def generate_summary(self, patient_id: str, data: list[str]):
 

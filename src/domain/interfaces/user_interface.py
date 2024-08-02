@@ -28,6 +28,10 @@ class UserInterface(ABC):
         pass
 
     @abstractmethod
+    def get_patient_visits(self, mrn: str, current_user: str):
+        pass
+
+    @abstractmethod
     def generate_summary(self, patient_id: str, data: list[str]):
         pass
 
