@@ -1,5 +1,8 @@
 ## Getting Started
-## Chat Application
+
+
+![Screenshot from 2024-08-02 12-11-05](https://github.com/user-attachments/assets/7c606940-25b2-4871-9f4e-c5d0459b4b2c)
+
 
 First clone the repository.
 
