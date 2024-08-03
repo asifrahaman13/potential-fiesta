@@ -1,4 +1,6 @@
-## Getting Started
+## Adrax
+
+Screenshoots
 
 ![Screenshot from 2024-08-02 12-11-05](https://github.com/user-attachments/assets/7c606940-25b2-4871-9f4e-c5d0459b4b2c)
 ![Screenshot from 2024-08-02 12-16-00](https://github.com/user-attachments/assets/500190e6-8908-4985-9573-abb41b1d65ae)
