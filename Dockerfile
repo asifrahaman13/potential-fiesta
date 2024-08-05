@@ -5,8 +5,7 @@ FROM python:3.12-slim
 WORKDIR /app
 
 # Install system dependencies and Poetry
-RUN apt-get update && \
-    apt-get install -y curl build-essential libpq-dev && \
+RUN apt-get update && \ 
     curl -sSL https://install.python-poetry.org | python3 - && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
