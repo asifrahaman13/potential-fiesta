@@ -6,11 +6,13 @@ interface Login {
 }
 
 async function LoginData(loginData: Login) {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  console.log('##################################', backendUrl);
   const { membername, memberpass } = loginData;
 
   try {
     const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/login`,
+      `${backendUrl}/users/login`,
       { membername, memberpass },
       {
         headers: {
