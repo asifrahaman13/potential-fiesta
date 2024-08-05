@@ -5,8 +5,6 @@ import { Fragment } from 'react';
 import { RootState } from '@/lib/store';
 import React from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import Integrations from './components/Integrations';
-import Reports from './components/Reports';
 import { useDispatch, useSelector } from 'react-redux';
 import { toogleChanges } from '@/lib/features/workspace/workSpaceHeaderSlice';
 
@@ -17,6 +15,8 @@ import {
   classNames,
   user,
 } from '@/static/dashboard';
+import Patients from './components/Patients';
+import Companions from './pages/Companions';
 
 export default function Page() {
   const workspaceHeader = useSelector(
@@ -28,10 +28,10 @@ export default function Page() {
     switch (workspaceHeader.header) {
       case 'Visits':
         return <Visits />;
-      case 'Integrations':
-        return <Integrations />;
-      case 'Reports':
-        return <Reports />;
+      case 'Patients':
+        return <Patients />;
+      case 'Companions':
+        return <Companions />;
       case 'Visits':
         return <Visits />;
     }
@@ -71,16 +71,9 @@ export default function Page() {
                           key=""
                           name="random"
                           className="text-Accent-Blue text-gray-900 hover:bg-gray-50 hover:text-gray-900 flex items-center   px-3 text-sm font-medium gap-2"
-                        >
-                          <div
-                            className=" text-medium text-Gray
-                    font-semibold"
-                          >
-                            Patients
-                          </div>
-                        </button>
+                        ></button>
                         {navigation.map((item, index) => (
-                          <>
+                          <div className="flex gap-2" key={index}>
                             <button
                               name={item.name}
                               className={classNames(
@@ -102,18 +95,8 @@ export default function Page() {
                               </div>
                             </button>
                             <hr />
-                          </>
-                        ))}
-
-                        <button
-                          key=""
-                          name="random"
-                          className="text-Accent-Blue text-gray-900 hover:bg-gray-50 hover:text-gray-900 flex gap-2 items-center   px-3 text-sm font-medium "
-                        >
-                          <div className=" text-medium text-Gray font-semibold">
-                            Reports
                           </div>
-                        </button>
+                        ))}
                       </nav>
                     </div>
                   </div>

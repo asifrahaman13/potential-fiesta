@@ -1,4 +1,8 @@
-const navigation = [{ name: 'Visits', href: 'visits.svg', current: false }];
+const navigation = [
+  { name: 'Patients', href: 'visits.svg', current: false },
+  { name: 'Visits', href: 'visits.svg', current: false },
+  { name: 'Companions', href: 'visits.svg', current: false },
+];
 
 const user = {
   name: 'Tom Cook',

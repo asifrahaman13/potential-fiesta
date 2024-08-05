@@ -77,7 +77,7 @@ const History: React.FC<PageProps> = ({ patientId, patientName }) => {
 
   return (
     <>
-      {fetching == true && <Loader />}
+      {/* {fetching == true && <Loader />} */}
       <div className=" w-full  xl:flex">
         {patientId === '' && (
           <>

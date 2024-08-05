@@ -297,8 +297,8 @@ const Visits = () => {
   }
 
   return (
-    <>
-      {fetching === true && <Loader />}
+    <React.Fragment>
+      {/* {fetching === true && <Loader />} */}
 
       <div className="xl:flex  bg-Gray-linear w-full sticky top-0 h-screen overflow-y-scroll               ">
         <div className="xl:w-1/5 bg-white flex flex-col items-center  h-screen overflow-y-scroll no-scrollbar">
@@ -586,7 +586,7 @@ const Visits = () => {
         )}
       </div>
       <Patient />
-    </>
+    </React.Fragment>
   );
 };
 
