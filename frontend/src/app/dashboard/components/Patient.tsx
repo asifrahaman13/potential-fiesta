@@ -1,24 +1,24 @@
-"use client";
+'use client';
 import {
   newPatient,
   startNewPatient,
   setPatientData,
   resetData,
-} from "@/lib/features/dashboard/pollsSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/lib/store";
-import { saveData } from "@/app/api/patients/history";
+} from '@/lib/features/dashboard/pollsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/lib/store';
+import { saveData } from '@/app/api/patients/history';
 import {
   setAllHistory,
   appendCurrentHistory,
-} from "@/lib/features/history/allHistorySlice";
+} from '@/lib/features/history/allHistorySlice';
 
 const CreatePoll = () => {
   function getTimeString() {
     const timestamp = Date.now();
     const date = new Date(timestamp);
-    const hours = date.getHours().toString().padStart(2, "0");
-    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
     return `${hours}:${minutes}`;
   }
 
@@ -26,8 +26,8 @@ const CreatePoll = () => {
     const timestamp = Date.now(); // Example timestamp
     const date = new Date(timestamp);
     const year = date.getFullYear().toString();
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
     return `${year}-${month}-${day}`;
   }
   const pollsSlice = useSelector((state: RootState) => state.polls);
@@ -45,10 +45,10 @@ const CreatePoll = () => {
     const formatCurrDate = getDateString();
     console.log(formatCurrDate);
     dispatch(appendCurrentHistory({ newData: pollsSlice.patientDetails }));
-    dispatch(setPatientData({ name: "timestamp", value: formattedTime }));
-    dispatch(setPatientData({ name: "date", value: formatCurrDate }));
+    dispatch(setPatientData({ name: 'timestamp', value: formattedTime }));
+    dispatch(setPatientData({ name: 'date', value: formatCurrDate }));
     try {
-      const access_token = localStorage.getItem("access_token") || "";
+      const access_token = localStorage.getItem('access_token') || '';
       const response = await saveData(access_token, pollsSlice.patientDetails);
       // dispatch(resetData())
     } catch (err) {
@@ -125,7 +125,7 @@ const CreatePoll = () => {
                           onChange={(e) => {
                             dispatch(
                               setPatientData({
-                                name: "patient_name",
+                                name: 'patient_name',
                                 value: e.target.value,
                               })
                             );
@@ -151,7 +151,7 @@ const CreatePoll = () => {
                           onChange={(e) => {
                             dispatch(
                               setPatientData({
-                                name: "mrn",
+                                name: 'mrn',
                                 value: e.target.value,
                               })
                             );
@@ -178,7 +178,7 @@ const CreatePoll = () => {
                           onChange={(e) => {
                             dispatch(
                               setPatientData({
-                                name: "dob",
+                                name: 'dob',
                                 value: e.target.value,
                               })
                             );
@@ -204,7 +204,7 @@ const CreatePoll = () => {
                           onChange={(e) => {
                             dispatch(
                               setPatientData({
-                                name: "gender",
+                                name: 'gender',
                                 value: e.target.value,
                               })
                             );

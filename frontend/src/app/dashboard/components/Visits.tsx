@@ -1,33 +1,33 @@
 /* eslint-disable @next/next/no-img-element */
-"use client";
-import React from "react";
-import { useState, useEffect, useRef } from "react";
+'use client';
+import React from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   SpeechConfig,
   AudioConfig,
   ServicePropertyChannel,
   OutputFormat,
   ConversationTranscriber,
-} from "microsoft-cognitiveservices-speech-sdk";
-import History from "./History";
-import Patient from "./Patient";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/lib/store";
-import { showHistory } from "@/lib/features/dashboard/pollsSlice";
+} from 'microsoft-cognitiveservices-speech-sdk';
+import History from './History';
+import Patient from './Patient';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/lib/store';
+import { showHistory } from '@/lib/features/dashboard/pollsSlice';
 import {
   getPatientHisory,
   appendData,
   sendDetailedData,
   uploadData,
   generateSummary,
-} from "@/app/api/patients/history";
-import { speakerConfig } from "@/app/config/config";
-import useAutosizeTextArea from "./useAutosizeTextArea";
-import Loader from "@/app/components/Loader";
-import { HistoryItem } from "@/app/types/Visit_Types";
-import { newPatient } from "@/lib/features/dashboard/pollsSlice";
-import { setAllHistory } from "@/lib/features/history/allHistorySlice";
-import axios from "axios";
+} from '@/app/api/patients/history';
+import { speakerConfig } from '@/app/config/config';
+import useAutosizeTextArea from './useAutosizeTextArea';
+import Loader from '@/app/components/Loader';
+import { HistoryItem } from '@/app/types/Visit_Types';
+import { newPatient } from '@/lib/features/dashboard/pollsSlice';
+import { setAllHistory } from '@/lib/features/history/allHistorySlice';
+import axios from 'axios';
 
 interface PrevItem {
   privJson: string;
@@ -42,16 +42,16 @@ interface TranscriptionData {
 const Visits = () => {
   const pollsSlice = useSelector((state: RootState) => state.polls);
   const allHistorySlice = useSelector((state: RootState) => state.allHistory);
-  const [data, setData] = useState([""]);
+  const [data, setData] = useState(['']);
   const [isRecording, setIsRecording] = useState(false);
   const [fetching, setFetching] = useState(true);
   const dispatch = useDispatch();
-  const [patientId, setPatient] = useState("");
-  const [patientName, setPatientName] = useState("");
+  const [patientId, setPatient] = useState('');
+  const [patientName, setPatientName] = useState('');
   let recognizer: any;
   let conversationTranscriber: any;
   const [speaker, setSpeaker] = useState(speakerConfig());
-  const [record_state, setRecordState] = useState("initial");
+  const [record_state, setRecordState] = useState('initial');
   async function AppendData(
     access_token: string,
     patientId: string,
@@ -59,15 +59,15 @@ const Visits = () => {
   ) {
     await appendData(access_token, patientId, p);
   }
-  const [currSpeaker, setCurrSpeaker] = useState("");
+  const [currSpeaker, setCurrSpeaker] = useState('');
   const speechConfig = SpeechConfig.fromSubscription(
-    speaker?.SPEECH_KEY || "",
-    speaker?.SPEECH_REGION || ""
+    speaker?.SPEECH_KEY || '',
+    speaker?.SPEECH_REGION || ''
   );
-  speechConfig.speechRecognitionLanguage = "en-US";
+  speechConfig.speechRecognitionLanguage = 'en-US';
   speechConfig.setServiceProperty(
-    "wordLevelConfidence",
-    "true",
+    'wordLevelConfidence',
+    'true',
     ServicePropertyChannel.UriQueryParameter
   );
   speechConfig.outputFormat = OutputFormat.Detailed;
@@ -82,7 +82,7 @@ const Visits = () => {
   });
 
   const initializeSpeechRecognizer = async () => {
-    const access_token = localStorage.getItem("access_token") || "";
+    const access_token = localStorage.getItem('access_token') || '';
     if (isRecording) {
       conversationTranscriber.sessionStarted = function (s: any, e: any) {
         setT((prev) => ({
@@ -97,10 +97,10 @@ const Visits = () => {
         conversationTranscriber.stopTranscribingAsync();
       };
       conversationTranscriber.transcribed = function (s: any, e: any) {
-        let parts = e.result.speakerId.split("-");
-        parts[0] = "Speaker";
-        let newSpeakerId = parts.join("-");
-        if (e.result.speakerId != "Unknown") {
+        let parts = e.result.speakerId.split('-');
+        parts[0] = 'Speaker';
+        let newSpeakerId = parts.join('-');
+        if (e.result.speakerId != 'Unknown') {
           console.log(`${newSpeakerId}: ${e.result.text}`);
           setCurrSpeaker(newSpeakerId);
           setData((prev) => [...prev, `${newSpeakerId}: ${e.result.text}`]);
@@ -127,7 +127,7 @@ const Visits = () => {
       conversationTranscriber.startTranscribingAsync(
         function () {},
         function (err: any) {
-          console.trace("err - starting transcription: " + err);
+          console.trace('err - starting transcription: ' + err);
         }
       );
 
@@ -135,7 +135,7 @@ const Visits = () => {
         await recognizer.startContinuousRecognitionAsync();
         setIsRecording(true);
       } catch (error) {
-        console.error("Error starting recognition:", error);
+        console.error('Error starting recognition:', error);
       }
     }
   };
@@ -149,7 +149,7 @@ const Visits = () => {
             conversationTranscriber.close();
           },
           (error: any) => {
-            console.error("Error stopping recognition:", error);
+            console.error('Error stopping recognition:', error);
           }
         );
       }
@@ -157,14 +157,14 @@ const Visits = () => {
   }, [isRecording]);
 
   const stopRecording = async () => {
-    setRecordState("initial");
+    setRecordState('initial');
     console.log(t);
     setIsRecording(false);
     stopClock();
     conversationTranscriber.stopTranscribingAsync();
 
     try {
-      const access_token = localStorage.getItem("access_token") || "";
+      const access_token = localStorage.getItem('access_token') || '';
       // await sendDetailedData(access_token, t);
       // await uploadData(access_token, data.join(","), pollsSlice.patientDetails.visitId);
       await generateSummary(
@@ -173,12 +173,12 @@ const Visits = () => {
         data
       );
     } catch (error) {
-      console.log("Error stopping recording:", error);
+      console.log('Error stopping recording:', error);
     }
   };
 
   const startRecording = () => {
-    setRecordState("recording");
+    setRecordState('recording');
     if (!isRecording) {
       setIsRecording(true);
       startClock();
@@ -188,7 +188,7 @@ const Visits = () => {
   useEffect(() => {
     async function FetchHistory() {
       try {
-        const access_token = localStorage.getItem("access_token");
+        const access_token = localStorage.getItem('access_token');
         if (access_token) {
           const response = await getPatientHisory(access_token);
           setFetching(false);
@@ -201,12 +201,12 @@ const Visits = () => {
           }
         }
       } catch (error) {
-        console.log("Error fetching history");
+        console.log('Error fetching history');
       }
     }
     FetchHistory();
   }, [dispatch]);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   useAutosizeTextArea(textAreaRef.current, value);
@@ -244,14 +244,14 @@ const Visits = () => {
   };
 
   const pauseClock = () => {
-    console.log("pause clock");
-    setRecordState("paused");
+    console.log('pause clock');
+    setRecordState('paused');
     setIsRunning(false);
     setIsRecording(false);
   };
 
   const resumeClock = () => {
-    setRecordState("recording");
+    setRecordState('recording');
     setIsRunning(true);
     setIsRecording(true);
   };
@@ -259,15 +259,15 @@ const Visits = () => {
   const formatTime = (timeInSeconds: any) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
-    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(
       2,
-      "0"
+      '0'
     )}`;
   };
 
   const [patientsVisits, setPatientsVisits] = useState<HistoryItem[]>([]);
   async function findPatientHistory() {
-    const access_token = localStorage.getItem("access_token");
+    const access_token = localStorage.getItem('access_token');
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
     if (access_token) {
       const response = await axios.post(
@@ -285,11 +285,10 @@ const Visits = () => {
       if (response?.status === 200) {
         console.log(response.data);
         setPatientsVisits(response.data);
-        
       }
     }
   }
-  const [previousPatientId, setPreviousPatientId] = useState("");
+  const [previousPatientId, setPreviousPatientId] = useState('');
 
   function handlepatientIdChange(e: React.ChangeEvent<HTMLInputElement>) {
     setPreviousPatientId(e.target.value);
@@ -316,9 +315,10 @@ const Visits = () => {
               <div className="text-Ind "> New Visit</div>
             </button>
           </div>
-          <div className="font-semibold text-lg text-gray-600">Find with MRN</div>
+          <div className="font-semibold text-lg text-gray-600">
+            Find with MRN
+          </div>
           <div className="flex items-center justify-center outline-none shadow-md">
-
             <div>
               <input
                 type="text"
@@ -342,7 +342,7 @@ const Visits = () => {
 
           {patientsVisits?.map((item, index) => (
             <>
-              {item.visitId !== "" && (
+              {item.visitId !== '' && (
                 <div className="w-full flex  flex-col gap-0" key={index}>
                   <button
                     className="w-full border border-gray-100  p-4 flex flex-col   m-0 hover:bg-Amber-Orange"
@@ -363,10 +363,10 @@ const Visits = () => {
                     </div>
                     <div className="flex ">
                       <span className="text-gray-400 p-1"> {item.dob}</span>
-                      <span className="text-gray-400 p-1"> {"."}</span>
+                      <span className="text-gray-400 p-1"> {'.'}</span>
                       <span className="text-gray-400 p-1">
-                        {" "}
-                        #{item.visitId}{" "}
+                        {' '}
+                        #{item.visitId}{' '}
                       </span>
                     </div>
                   </button>
@@ -397,7 +397,7 @@ const Visits = () => {
                   </div>
                   <div className="flex text-gray-400 gap-2">
                     <div>{pollsSlice.patientDetails.gender}</div>
-                    <div>{""}</div>|
+                    <div>{''}</div>|
                     <div> 2469 Peachtree Ln, Atlanta, GA 30319</div>
                   </div>
                   <div className="flex text-gray-400 gap-2">
@@ -439,7 +439,7 @@ const Visits = () => {
 
               <div className="w-1/3 bg-white flex flex-col items-center p-4">
                 <div className=" flex w-full justify-between">
-                  <button>{">>"}</button>
+                  <button>{'>>'}</button>
                   <div>Transcription</div>
                 </div>
                 <div className="w-full flex flex-col items-center p-16  gap-8">
@@ -447,17 +447,17 @@ const Visits = () => {
                     Tap on the microphone button to get started...
                   </div>
                   <div className="text-4xl font-semibold">
-                    {" "}
-                    {formatTime(time) || "00:00"}
+                    {' '}
+                    {formatTime(time) || '00:00'}
                   </div>
                   <div className="w-full flex items-center justify-center gap-6">
-                    {record_state == "initial" && (
+                    {record_state == 'initial' && (
                       <button onClick={startRecording}>
                         <img src="/images/evva/mic.svg" alt="" />
                       </button>
                     )}
 
-                    {record_state == "recording" && (
+                    {record_state == 'recording' && (
                       <>
                         <button>
                           <img src="/images/evva/group.svg" alt="" />
@@ -471,9 +471,9 @@ const Visits = () => {
                       </>
                     )}
 
-                    {record_state == "paused" && (
+                    {record_state == 'paused' && (
                       <>
-                        {" "}
+                        {' '}
                         <button onClick={startRecording}>
                           <img src="/images/evva/mic.svg" alt="" />
                         </button>
@@ -488,9 +488,9 @@ const Visits = () => {
                   <div className="flex flex-col gap-4 mt-6 p-2 ">
                     {data.map((item, index) => (
                       <>
-                        {item != null && item != "" && (
+                        {item != null && item != '' && (
                           <>
-                            {item.substring(0, 9) === "Speaker-1" && (
+                            {item.substring(0, 9) === 'Speaker-1' && (
                               <div key={index}>
                                 <div className="flex w-full items-start gap-2">
                                   <div className="rounded-full bg-yellow-100 ml-auto flex items-center w-8 h-8 justify-center p-4">
@@ -511,7 +511,7 @@ const Visits = () => {
                               </div>
                             )}
 
-                            {item.substring(0, 9) !== "Speaker-1" && (
+                            {item.substring(0, 9) !== 'Speaker-1' && (
                               <div key={index}>
                                 <div className="flex w-full items-start gap-2">
                                   <div className="rounded-full bg-indigo-100 ml-auto flex items-center w-8 h-8 justify-center p-4">

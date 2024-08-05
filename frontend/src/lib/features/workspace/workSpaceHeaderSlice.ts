@@ -1,9 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export const workSpaceHeaderSlice = createSlice({
-  name: "Workspace header",
+  name: 'Workspace header',
   initialState: {
-    header: "Visits",
+    header: 'Visits',
   },
   reducers: {
     toogleChanges: (state, action) => {

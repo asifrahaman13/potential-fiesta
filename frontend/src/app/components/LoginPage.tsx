@@ -1,23 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
-"use client";
-import React, { useEffect, useState } from "react";
-import { Fragment } from "react";
-import { LoginData, Authenticate } from "@/app/api/auth/Login";
-
+'use client';
+import React, { useEffect, useState } from 'react';
+import { Fragment } from 'react';
+import { LoginData, Authenticate } from '@/app/api/auth/Login';
 
 const LoginPage = () => {
   const [loginData, setLoginData] = useState({
-    membername: "",
-    memberpass: "",
+    membername: '',
+    memberpass: '',
   });
   useEffect(() => {
     async function AuthenticateUser() {
       try {
-        const access_token = localStorage.getItem("access_token");
+        const access_token = localStorage.getItem('access_token');
         if (access_token != null) {
           const response = await Authenticate();
           if (response == true) {
-            window.location.href = "/dashboard";
+            window.location.href = '/dashboard';
           }
         }
       } catch (err) {
@@ -33,8 +32,8 @@ const LoginPage = () => {
       const response = await LoginData(loginData);
       if (response?.status === 200) {
         if (response?.data.access_token != null) {
-          localStorage.setItem("access_token", response.data.access_token);
-          window.location.href = "/dashboard";
+          localStorage.setItem('access_token', response.data.access_token);
+          window.location.href = '/dashboard';
         }
       }
     } catch (err) {
@@ -69,14 +68,19 @@ const LoginPage = () => {
                   src="https://tailwindui.com/img/logos/mark.svg?color=yellow&shade=600"
                   alt="Your Company"
                 />
-                <h2 className="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
+                <h2 className="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                  Sign in to your account
+                </h2>
               </div>
 
               <div className="mt-10">
                 <div>
                   <div className="space-y-6">
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
                         User name
                       </label>
                       <div className="mt-2">
@@ -96,7 +100,10 @@ const LoginPage = () => {
                     </div>
 
                     <div>
-                      <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                      <label
+                        htmlFor="password"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
                         Password
                       </label>
                       <div className="mt-2">
@@ -117,14 +124,25 @@ const LoginPage = () => {
 
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
-                        <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 rounded border-gray-300 text-yellow-600 focus:ring-yellow-600" />
-                        <label htmlFor="remember-me" className="ml-3 block text-sm leading-6 text-gray-700">
+                        <input
+                          id="remember-me"
+                          name="remember-me"
+                          type="checkbox"
+                          className="h-4 w-4 rounded border-gray-300 text-yellow-600 focus:ring-yellow-600"
+                        />
+                        <label
+                          htmlFor="remember-me"
+                          className="ml-3 block text-sm leading-6 text-gray-700"
+                        >
                           Remember me
                         </label>
                       </div>
 
                       <div className="text-sm leading-6">
-                        <a href="#" className="font-semibold text-yellow-600 hover:text-yellow-500">
+                        <a
+                          href="#"
+                          className="font-semibold text-yellow-600 hover:text-yellow-500"
+                        >
                           Forgot password?
                         </a>
                       </div>

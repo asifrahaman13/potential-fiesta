@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface Summary {
   summary: string;
@@ -33,28 +33,34 @@ interface ChangeSummaryFieldsPayload {
 
 const initialState: HistoryState = {
   summary: {
-    summary: "",
-    subjective: "",
-    objective: "",
-    assessment: "",
-    plan: "",
+    summary: '',
+    subjective: '',
+    objective: '',
+    assessment: '',
+    plan: '',
   },
-  details: [""],
+  details: [''],
 };
 
 export const historySlice = createSlice({
-  name: "History slice",
+  name: 'History slice',
   initialState,
   reducers: {
     setBasicData: (state, action: PayloadAction<SetBasicDataPayload>) => {
       const { summary } = action.payload;
       state.summary = summary;
     },
-    setTranscriptions: (state, action: PayloadAction<SetTranscriptionsPayload>) => {
+    setTranscriptions: (
+      state,
+      action: PayloadAction<SetTranscriptionsPayload>
+    ) => {
       const { details } = action.payload;
       state.details = details;
     },
-    changeTranscript: (state, action: PayloadAction<ChangeTranscriptPayload>) => {
+    changeTranscript: (
+      state,
+      action: PayloadAction<ChangeTranscriptPayload>
+    ) => {
       const { index, newTranscript } = action.payload;
       state.details = [
         ...state.details.slice(0, index),
@@ -62,7 +68,10 @@ export const historySlice = createSlice({
         ...state.details.slice(index + 1),
       ];
     },
-    changeSummaryFields: (state, action: PayloadAction<ChangeSummaryFieldsPayload>) => {
+    changeSummaryFields: (
+      state,
+      action: PayloadAction<ChangeSummaryFieldsPayload>
+    ) => {
       const { fieldName, summary } = action.payload;
       state.summary[fieldName] = summary;
     },

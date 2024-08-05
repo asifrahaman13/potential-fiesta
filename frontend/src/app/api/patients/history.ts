@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 async function fetchHistory(access_token: string, patientId: string) {
   try {
@@ -7,7 +7,7 @@ async function fetchHistory(access_token: string, patientId: string) {
       { visitId: patientId },
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           APISECRET: process.env.NEXT_PUBLIC_APISECRET,
           Authorization: `Bearer ${access_token}`,
         },
@@ -28,13 +28,13 @@ async function getPatientHisory(access_token: string) {
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/get-data`,
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           APISECRET: process.env.NEXT_PUBLIC_APISECRET,
           Authorization: `Bearer ${access_token}`,
         },
       }
     );
-    console.log("the response is ", response);
+    console.log('the response is ', response);
     return response;
   } catch (err) {
     console.log(err);
@@ -44,8 +44,8 @@ async function getPatientHisory(access_token: string) {
 function getTimeString() {
   const timestamp = Date.now();
   const date = new Date(timestamp);
-  const hours = date.getHours().toString().padStart(2, "0");
-  const minutes = date.getMinutes().toString().padStart(2, "0");
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
   return `${hours}:${minutes}`;
 }
 
@@ -53,8 +53,8 @@ function getDateString() {
   const timestamp = Date.now(); // Example timestamp
   const date = new Date(timestamp);
   const year = date.getFullYear().toString();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
   return `${year}-${month}-${day}`;
 }
 
@@ -62,7 +62,7 @@ async function saveData(access_token: string, data: any) {
   const { details, mrn, date, dob, timestamp, gender, visitId, patient_name } =
     data;
   console.log(
-    "the dtails received",
+    'the dtails received',
     details,
     mrn,
     date,
@@ -89,7 +89,7 @@ async function saveData(access_token: string, data: any) {
       },
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           APISECRET: process.env.NEXT_PUBLIC_APISECRET,
           Authorization: `Bearer ${access_token}`,
         },
@@ -117,7 +117,7 @@ async function appendData(
       },
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           APISECRET: process.env.NEXT_PUBLIC_APISECRET,
           Authorization: `Bearer ${access_token}`,
         },
@@ -144,7 +144,7 @@ async function confirmSave(
       { visitId: patientId, details: details, summary: summary_details },
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           APISECRET: process.env.NEXT_PUBLIC_APISECRET,
           Authorization: `Bearer ${access_token}`,
         },
@@ -156,7 +156,7 @@ async function confirmSave(
         { patient_id: patientId },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             APISECRET: process.env.NEXT_PUBLIC_APISECRET,
             Authorization: `Bearer ${access_token}`,
           },
@@ -182,12 +182,12 @@ async function uploadData(
       `${process.env.NEXT_PUBLIC_AI_BACKEND_URL}/upload-files`,
       {
         transcription: trasncription,
-        secret_key: "approved",
+        secret_key: 'approved',
         patient_id: patientId,
       },
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           APISECRET: process.env.NEXT_PUBLIC_APISECRET,
           Authorization: `Bearer ${access_token}`,
         },
@@ -208,7 +208,7 @@ async function getSummary(access_token: string, patientId: string) {
       { visitId: patientId },
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           APISECRET: process.env.NEXT_PUBLIC_APISECRET,
           Authorization: `Bearer ${access_token}`,
         },
@@ -231,7 +231,7 @@ async function sendDetailedData(access_token: string, data: any) {
       data,
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           APISECRET: process.env.NEXT_PUBLIC_APISECRET,
           Authorization: `Bearer ${access_token}`,
         },
@@ -257,7 +257,7 @@ async function generateSummary(
       { patientId, data },
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           APISECRET: process.env.NEXT_PUBLIC_APISECRET,
           Authorization: `Bearer ${access_token}`,
         },

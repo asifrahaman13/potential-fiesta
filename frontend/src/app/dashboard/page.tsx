@@ -1,58 +1,77 @@
 /* eslint-disable @next/next/no-img-element */
-"use client";
-import Visits from "./components/Visits";
-import { Fragment } from "react";
-import { RootState } from "@/lib/store";
-import React from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import Integrations from "./components/Integrations";
-import Reports from "./components/Reports";
-import { useDispatch, useSelector } from "react-redux";
-import { toogleChanges } from "@/lib/features/workspace/workSpaceHeaderSlice";
+'use client';
+import Visits from './components/Visits';
+import { Fragment } from 'react';
+import { RootState } from '@/lib/store';
+import React from 'react';
+import { Disclosure, Menu, Transition } from '@headlessui/react';
+import Integrations from './components/Integrations';
+import Reports from './components/Reports';
+import { useDispatch, useSelector } from 'react-redux';
+import { toogleChanges } from '@/lib/features/workspace/workSpaceHeaderSlice';
 
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { navigation, userNavigation, classNames, user } from "@/static/dashboard";
+import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import {
+  navigation,
+  userNavigation,
+  classNames,
+  user,
+} from '@/static/dashboard';
 
 export default function Example() {
-  const workspaceHeader = useSelector((state: RootState) => state.workspaceHeader);
+  const workspaceHeader = useSelector(
+    (state: RootState) => state.workspaceHeader
+  );
   const dispatch = useDispatch();
 
   const renderSection = () => {
     switch (workspaceHeader.header) {
-      case "Visits":
+      case 'Visits':
         return <Visits />;
-      case "Integrations":
+      case 'Integrations':
         return <Integrations />;
-      case "Reports":
+      case 'Reports':
         return <Reports />;
-      case "Visits":
+      case 'Visits':
         return <Visits />;
     }
   };
 
   function handleLogout() {
-    localStorage.removeItem("access_token");
-    window.location.href = "/";
+    localStorage.removeItem('access_token');
+    window.location.href = '/';
   }
 
   return (
     <>
-      <div className={`flex flex-col h-screen overflow-x-hidden overflow-y-hidden `}>
-        <Disclosure as="header" className="bg-white shadow border border-gray-100">
+      <div
+        className={`flex flex-col h-screen overflow-x-hidden overflow-y-hidden `}
+      >
+        <Disclosure
+          as="header"
+          className="bg-white shadow border border-gray-100"
+        >
           {({ open }) => (
             <>
               <div className="mx-auto px-2 sm:px-4 lg:divide-y lg:divide-Neutral lg:px-8">
                 <div className="relative flex h-16 justify-between">
                   <div className="relative z-10 flex px-2 lg:px-0">
                     <div className="flex gap-3 flex-shrink-0 items-center">
-                      <img alt="Interface Image" className="h-8 w-auto" src="/images/va.svg" />
+                      <img
+                        alt="Interface Image"
+                        className="h-8 w-auto"
+                        src="/images/va.svg"
+                      />
                     </div>
                   </div>
                   <div className="relative z-0 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
                     <div className="w-full sm:max-w-xs">
                       <nav className=" lg:flex lg:space-x-" aria-label="Global">
-                        <button key="" name="random" className="text-Accent-Blue text-gray-900 hover:bg-gray-50 hover:text-gray-900 flex items-center   px-3 text-sm font-medium gap-2">
-          
+                        <button
+                          key=""
+                          name="random"
+                          className="text-Accent-Blue text-gray-900 hover:bg-gray-50 hover:text-gray-900 flex items-center   px-3 text-sm font-medium gap-2"
+                        >
                           <div
                             className=" text-medium text-Gray
                     font-semibold"
@@ -65,24 +84,35 @@ export default function Example() {
                             <button
                               name={item.name}
                               className={classNames(
-                                item.name == workspaceHeader.header ? "text-Accent-Blue " : "text-gray-900 hover:bg-gray-50 hover:text-gray-900",
-                                " items-center px-3 text-sm font-medium flex gap-2 border border-yellow-500 bg-yellow-100 rounded-2xl p-2"
+                                item.name == workspaceHeader.header
+                                  ? 'text-Accent-Blue '
+                                  : 'text-gray-900 hover:bg-gray-50 hover:text-gray-900',
+                                ' items-center px-3 text-sm font-medium flex gap-2 border border-yellow-500 bg-yellow-100 rounded-2xl p-2'
                               )}
-                              aria-current={item.current ? "page" : undefined}
+                              aria-current={item.current ? 'page' : undefined}
                               onClick={(e) => {
                                 dispatch(toogleChanges({ name: item.name }));
                               }}
                             >
-                          
-                              <div className={`${item.name == workspaceHeader.header ? " text-black" : ""} text-medium font-semibold`}> {item.name}</div>
+                              <div
+                                className={`${item.name == workspaceHeader.header ? ' text-black' : ''} text-medium font-semibold`}
+                              >
+                                {' '}
+                                {item.name}
+                              </div>
                             </button>
                             <hr />
                           </>
                         ))}
 
-                        <button key="" name="random" className="text-Accent-Blue text-gray-900 hover:bg-gray-50 hover:text-gray-900 flex gap-2 items-center   px-3 text-sm font-medium ">
-                        
-                          <div className=" text-medium text-Gray font-semibold">Reports</div>
+                        <button
+                          key=""
+                          name="random"
+                          className="text-Accent-Blue text-gray-900 hover:bg-gray-50 hover:text-gray-900 flex gap-2 items-center   px-3 text-sm font-medium "
+                        >
+                          <div className=" text-medium text-Gray font-semibold">
+                            Reports
+                          </div>
                         </button>
                       </nav>
                     </div>
@@ -92,19 +122,36 @@ export default function Example() {
                     <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                       <span className="absolute -inset-0.5" />
                       <span className="sr-only">Open menu</span>
-                      {open ? <XMarkIcon className="block h-6 w-6" aria-hidden="true" /> : <Bars3Icon className="block h-6 w-6" aria-hidden="true" />}
+                      {open ? (
+                        <XMarkIcon
+                          className="block h-6 w-6"
+                          aria-hidden="true"
+                        />
+                      ) : (
+                        <Bars3Icon
+                          className="block h-6 w-6"
+                          aria-hidden="true"
+                        />
+                      )}
                     </Disclosure.Button>
                   </div>
                   <div className="hidden lg:relative lg:z-50 lg:ml-4 lg:flex lg:items-center">
                     <button type="button">
-                      <BellIcon className="h-6 w-auto mr-6" aria-hidden="true" />
+                      <BellIcon
+                        className="h-6 w-auto mr-6"
+                        aria-hidden="true"
+                      />
                     </button>
 
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative ">
                       <Menu.Button className="-m-1.5 flex items-center p-">
                         <span className="sr-only">Open user menu</span>
-                        <img className="h-8 w-8 rounded-full bg-orange-200 mr-4" src="/images/person.png" alt="" />
+                        <img
+                          className="h-8 w-8 rounded-full bg-orange-200 mr-4"
+                          src="/images/person.png"
+                          alt=""
+                        />
                       </Menu.Button>
                       <Transition
                         as={Fragment}
@@ -125,23 +172,32 @@ export default function Example() {
                                       <img src={item.href} className="h-8 w-8 rounded-full bg-orange-200 mr-4" alt="" />
                                     </div> */}
                                     <div>
-                                      {" "}
-                                      {item.name === "Log out" ? (
+                                      {' '}
+                                      {item.name === 'Log out' ? (
                                         <>
-                                          {" "}
+                                          {' '}
                                           <button
                                             onClick={(e) => {
                                               handleLogout();
                                             }}
-                                            className={classNames(active ? "bg-gray-50" : "", "mt-4 px-3  text-yellow-600 py-1 text-sm leading-6 ")}
+                                            className={classNames(
+                                              active ? 'bg-gray-50' : '',
+                                              'mt-4 px-3  text-yellow-600 py-1 text-sm leading-6 '
+                                            )}
                                           >
                                             {item.name}
                                           </button>
                                         </>
                                       ) : (
                                         <>
-                                          {" "}
-                                          <a href={item.href} className={classNames(active ? "bg-gray-50" : "", "mt-4 px-3 py-1 text-sm leading-6 text-gray-900")}>
+                                          {' '}
+                                          <a
+                                            href={item.href}
+                                            className={classNames(
+                                              active ? 'bg-gray-50' : '',
+                                              'mt-4 px-3 py-1 text-sm leading-6 text-gray-900'
+                                            )}
+                                          >
                                             {item.name}
                                           </a>
                                         </>
@@ -159,15 +215,24 @@ export default function Example() {
                 </div>
               </div>
 
-              <Disclosure.Panel as="nav" className="lg:hidden" aria-label="Global">
+              <Disclosure.Panel
+                as="nav"
+                className="lg:hidden"
+                aria-label="Global"
+              >
                 <div className="space-y-1 px-2 pb-3 pt-2">
                   {navigation.map((item, index) => (
                     <Disclosure.Button
                       key={index}
                       as="a"
                       href={item.href}
-                      className={classNames(item.current ? "bg-gray-100 text-gray-900" : "text-gray-900 hover:bg-gray-50 hover:text-gray-900", "block rounded-md py-2 px-3 text-base font-medium")}
-                      aria-current={item.current ? "page" : undefined}
+                      className={classNames(
+                        item.current
+                          ? 'bg-gray-100 text-gray-900'
+                          : 'text-gray-900 hover:bg-gray-50 hover:text-gray-900',
+                        'block rounded-md py-2 px-3 text-base font-medium'
+                      )}
+                      aria-current={item.current ? 'page' : undefined}
                     >
                       {item.name}
                     </Disclosure.Button>
@@ -176,11 +241,19 @@ export default function Example() {
                 <div className="border-t border-gray-200 pb-3 pt-4">
                   <div className="flex items-center px-4">
                     <div className="flex-shrink-0">
-                      <img className="h-10 w-10 rounded-full" src={user.imageUrl} alt="" />
+                      <img
+                        className="h-10 w-10 rounded-full"
+                        src={user.imageUrl}
+                        alt=""
+                      />
                     </div>
                     <div className="ml-3">
-                      <div className="text-base font-medium text-gray-800">{user.name}</div>
-                      <div className="text-sm font-medium text-gray-500">{user.email}</div>
+                      <div className="text-base font-medium text-gray-800">
+                        {user.name}
+                      </div>
+                      <div className="text-sm font-medium text-gray-500">
+                        {user.email}
+                      </div>
                     </div>
                     <button
                       type="button"
@@ -193,7 +266,12 @@ export default function Example() {
                   </div>
                   <div className="mt-3 space-y-1 px-2">
                     {userNavigation.map((item, index) => (
-                      <Disclosure.Button key={index} as="a" href={item.href} className="block rounded-md px-3 py-2 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900">
+                      <Disclosure.Button
+                        key={index}
+                        as="a"
+                        href={item.href}
+                        className="block rounded-md px-3 py-2 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                      >
                         {item.name}
                       </Disclosure.Button>
                     ))}

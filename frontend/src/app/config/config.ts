@@ -8,11 +8,10 @@ function speakerConfig() {
   }
 }
 
-
 function ServerConfig() {
   try {
     const SERVER_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
-    const SERVER_SOCKET= process.env.NEXT_PUBLIC_BACKEND_SOCKET;
+    const SERVER_SOCKET = process.env.NEXT_PUBLIC_BACKEND_SOCKET;
     return { SERVER_URL, SERVER_SOCKET };
   } catch (e) {
     console.log(e);
@@ -28,5 +27,4 @@ function ClientConfig() {
   }
 }
 
-export { speakerConfig, ServerConfig , ClientConfig};
-
+export { speakerConfig, ServerConfig, ClientConfig };

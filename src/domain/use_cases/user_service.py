@@ -3,7 +3,7 @@ from typing import Any, Dict
 from config.config import AI71_API_KEY
 from src.domain.entities.user import PatientData
 from src.domain.interfaces.user_interface import UserInterface
-from src.infastructure.repositories.database_repository import DatabaseRepository 
+from src.infastructure.repositories.database_repository import DatabaseRepository
 from fastapi.security import OAuth2PasswordBearer
 from ai71 import AI71
 
@@ -65,9 +65,11 @@ class UserService(UserInterface):
         return self.database_repository.find_single_entity_by_field_name(
             "patient_data", "visitId", patient_id
         )
-    
+
     def get_patient_visits(self, mrn: str, current_user: str):
-        result=self.database_repository.find_all_entities_by_field_name("patient_data", "mrn", mrn)
+        result = self.database_repository.find_all_entities_by_field_name(
+            "patient_data", "mrn", mrn
+        )
         print(len(result))
         return result
 
@@ -120,7 +122,11 @@ class UserService(UserInterface):
             return json_object
 
     def get_summary(self, patient_id: str):
-        return self.database_repository.find_single_entity_by_field_name("patient_data", "visitId", patient_id)["summary"]
-    
+        return self.database_repository.find_single_entity_by_field_name(
+            "patient_data", "visitId", patient_id
+        )["summary"]
+
     def update_qr(self, patient_id: str, data: dict):
-        return self.database_repository.insert_field("patient_data", "mrn", patient_id, "qr", data)
+        return self.database_repository.insert_field(
+            "patient_data", "mrn", patient_id, "qr", data
+        )

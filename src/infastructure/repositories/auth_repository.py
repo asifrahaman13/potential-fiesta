@@ -4,7 +4,7 @@ from config.config import SECRET_KEY
 
 
 class AuthRepository:
-    
+
     def __init__(self):
         self.secret_key = SECRET_KEY
 

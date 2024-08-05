@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 interface Login {
   membername: string;
@@ -14,7 +14,7 @@ async function LoginData(loginData: Login) {
       { membername, memberpass },
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           APISECRET: process.env.NEXT_PUBLIC_APISECRET,
         },
       }
@@ -32,7 +32,7 @@ async function LoginData(loginData: Login) {
 
 async function Authenticate() {
   try {
-    const access_token = localStorage.getItem("access_token");
+    const access_token = localStorage.getItem('access_token');
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/authenticate`,
       {

@@ -3,6 +3,7 @@ from typing import Any, Dict, List
 from pymongo import MongoClient
 from config.config import MONGO_URI
 
+
 class DatabaseRepository:
 
     def __init__(self):
@@ -76,18 +77,25 @@ class DatabaseRepository:
             return True
         except Exception as e:
             return False
-    
-    def insert_field(self, collection_name: str, field_name: str, field_value: str, new_filed_name_to_add: str, new_field_value_to_add: str):
+
+    def insert_field(
+        self,
+        collection_name: str,
+        field_name: str,
+        field_value: str,
+        new_filed_name_to_add: str,
+        new_field_value_to_add: str,
+    ):
         try:
             collection = self.__database[collection_name]
             result = collection.update_one(
-                {field_name: field_value}, {"$set": {new_filed_name_to_add: new_field_value_to_add}}
+                {field_name: field_value},
+                {"$set": {new_filed_name_to_add: new_field_value_to_add}},
             )
             return result
         except Exception as e:
             return False
-        
-    
+
     def append_entity_to_array(
         self,
         field: str,
@@ -108,5 +116,3 @@ class DatabaseRepository:
         except Exception as e:
             logging.error(f"Failed to append data: {e}")
             return False
-
-    

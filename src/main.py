@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.application.web.controllers import user_controller
 from fastapi.responses import JSONResponse
-from src.application.web.controllers.patient_data_controller import pateiend_router 
+from src.application.web.controllers.patient_data_controller import pateiend_router
 
 app = FastAPI()
 

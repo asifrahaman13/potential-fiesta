@@ -1,18 +1,18 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { Providers } from "./StoreProvider";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import { Providers } from './StoreProvider';
 
 const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
+  subsets: ['latin'],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: "Revolutionising the healthcare",
-  description: "Revolutionising the healthcare",
+  title: 'Revolutionising the healthcare',
+  description: 'Revolutionising the healthcare',
   icons: {
-    icon: "/evva.png", // Add custom logo icon to the website.
+    icon: '/evva.png', // Add custom logo icon to the website.
   },
 };
 

@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import axios from "axios";
-import { Line } from "react-chartjs-2";
+import React, { useEffect } from 'react';
+import axios from 'axios';
+import { Line } from 'react-chartjs-2';
 import {
   Chart,
   LineElement,
@@ -9,10 +9,10 @@ import {
   PointElement,
   LineController,
   Filler,
-} from "chart.js";
-import "chartjs-adapter-date-fns";
-import { HealthData } from "@/app/types/Dashboard_Types";
-import { metricInfo } from "@/app/types/Dashboard_Types";
+} from 'chart.js';
+import 'chartjs-adapter-date-fns';
+import { HealthData } from '@/app/types/Dashboard_Types';
+import { metricInfo } from '@/app/types/Dashboard_Types';
 
 Chart.register(
   LineElement,
@@ -26,33 +26,33 @@ Chart.register(
 const DataScreen: React.FC = () => {
   const [healthData, setHealthData] = React.useState<HealthData[]>([]);
   const [dataState, setDataState] = React.useState<
-    "loading" | "loaded" | "error" | null
+    'loading' | 'loaded' | 'error' | null
   >(null);
 
   useEffect(() => {
     const getGeneralMetrics = async () => {
-      if (dataState !== "loaded") {
-        setDataState("loading");
+      if (dataState !== 'loaded') {
+        setDataState('loading');
       }
       try {
-        const idToken = "some token";
+        const idToken = 'some token';
         if (idToken) {
-          console.log("Getting general health metrics");
+          console.log('Getting general health metrics');
           const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
           const response = await axios.get(
             `${backendUrl}/patient/patient-graphs/user`
           );
           if (response?.status === 200) {
             console.log(
-              "#############################################",
+              '#############################################',
               response.data
             );
             setHealthData(response.data);
-            setDataState("loaded");
+            setDataState('loaded');
           }
         }
       } catch (err) {
-        setDataState("error");
+        setDataState('error');
       }
     };
 
@@ -70,13 +70,14 @@ const DataScreen: React.FC = () => {
       <div>
         <h1 className="text-2xl font-bold mb-4 text-gray-400">PATIENT GRAPH</h1>
         <p className="text-sm mb-4">
-        All the detailes of the patient will be shown here. The details are eentered by the patient himself/herself. 
+          All the detailes of the patient will be shown here. The details are
+          eentered by the patient himself/herself.
         </p>
       </div>
 
-      {dataState === "loading" && <div>Loading...</div>}
+      {dataState === 'loading' && <div>Loading...</div>}
 
-      {dataState === "loaded" && healthData.length > 0 && (
+      {dataState === 'loaded' && healthData.length > 0 && (
         <div className="flex flex-col items-center">
           {Object.keys(metricInfo).map((key) => {
             const metricKey = key as keyof HealthData;
@@ -99,19 +100,19 @@ const DataScreen: React.FC = () => {
                           (item) => (item[metricKey] as number) ?? NaN
                         ),
                         borderColor:
-                          metricInfo[metricKey]?.color || "rgba(0, 0, 0, 1)",
+                          metricInfo[metricKey]?.color || 'rgba(0, 0, 0, 1)',
                         borderWidth: 2,
                         fill: true,
                         backgroundColor: (context) => {
                           const bgColor =
-                            metricInfo[metricKey]?.color || "rgba(0, 0, 0, 1)";
+                            metricInfo[metricKey]?.color || 'rgba(0, 0, 0, 1)';
                           const alphaColor = bgColor.replace(
                             /rgba?\((\d+), (\d+), (\d+).*/,
-                            "rgba($1, $2, $3, 0.1)"
+                            'rgba($1, $2, $3, 0.1)'
                           );
                           return alphaColor;
                         },
-                        cubicInterpolationMode: "monotone", // Curved line
+                        cubicInterpolationMode: 'monotone', // Curved line
                       },
                     ],
                   }}
@@ -125,7 +126,7 @@ const DataScreen: React.FC = () => {
                     },
                     scales: {
                       x: {
-                        type: "category",
+                        type: 'category',
                       },
                     },
                   }}

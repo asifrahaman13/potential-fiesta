@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import { confirmSave } from "@/app/api/patients/history";
-import { changeSummaryFields } from "@/lib/features/history/historySlice";
-import { RootState } from "@/lib/store";
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { confirmSave } from '@/app/api/patients/history';
+import { changeSummaryFields } from '@/lib/features/history/historySlice';
+import { RootState } from '@/lib/store';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 type Patient = {
   patientId: string;
 };
@@ -18,7 +18,7 @@ const Notes = ({ patientId }: Patient) => {
 
   async function ConfirmSave() {
     try {
-      const access_token = localStorage.getItem("access_token") || "";
+      const access_token = localStorage.getItem('access_token') || '';
       const response = await confirmSave(
         access_token,
         patientId,
@@ -47,7 +47,7 @@ const Notes = ({ patientId }: Patient) => {
             />
             <svg
               className={`w-6 h-6 ${
-                activeIndex === 0 ? "transform rotate-180" : ""
+                activeIndex === 0 ? 'transform rotate-180' : ''
               }`}
               fill="none"
               stroke="currentColor"
@@ -59,7 +59,7 @@ const Notes = ({ patientId }: Patient) => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
-                d={activeIndex === 1 ? "M19 9l-7 7-7-7" : "M5 15l7-7 7 7"}
+                d={activeIndex === 1 ? 'M19 9l-7 7-7-7' : 'M5 15l7-7 7 7'}
               />
             </svg>
           </div>
@@ -70,7 +70,7 @@ const Notes = ({ patientId }: Patient) => {
             onChange={(e) => {
               dispatch(
                 changeSummaryFields({
-                  fieldName: "summary",
+                  fieldName: 'summary',
                   summary: e.target.value,
                 })
               );
@@ -89,7 +89,7 @@ const Notes = ({ patientId }: Patient) => {
             <img src="/images/copy.svg" alt="" className=" ml-auto" />
             <svg
               className={`w-6 h-6 ${
-                activeIndex === 1 ? "transform rotate-180" : ""
+                activeIndex === 1 ? 'transform rotate-180' : ''
               }`}
               fill="none"
               stroke="currentColor"
@@ -101,7 +101,7 @@ const Notes = ({ patientId }: Patient) => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
-                d={activeIndex === 2 ? "M19 9l-7 7-7-7" : "M5 15l7-7 7 7"}
+                d={activeIndex === 2 ? 'M19 9l-7 7-7-7' : 'M5 15l7-7 7 7'}
               />
             </svg>
           </div>
@@ -113,7 +113,7 @@ const Notes = ({ patientId }: Patient) => {
               onChange={(e) => {
                 dispatch(
                   changeSummaryFields({
-                    fieldName: "subjective",
+                    fieldName: 'subjective',
                     summary: e.target.value,
                   })
                 );
@@ -137,7 +137,7 @@ const Notes = ({ patientId }: Patient) => {
             />
             <svg
               className={`w-6 h-6 ${
-                activeIndex === 2 ? "transform rotate-180" : ""
+                activeIndex === 2 ? 'transform rotate-180' : ''
               }`}
               fill="none"
               stroke="currentColor"
@@ -149,7 +149,7 @@ const Notes = ({ patientId }: Patient) => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
-                d={activeIndex === 3 ? "M19 9l-7 7-7-7" : "M5 15l7-7 7 7"}
+                d={activeIndex === 3 ? 'M19 9l-7 7-7-7' : 'M5 15l7-7 7 7'}
               />
             </svg>
           </div>
@@ -160,7 +160,7 @@ const Notes = ({ patientId }: Patient) => {
             onChange={(e) => {
               dispatch(
                 changeSummaryFields({
-                  fieldName: "objective",
+                  fieldName: 'objective',
                   summary: e.target.value,
                 })
               );
@@ -182,7 +182,7 @@ const Notes = ({ patientId }: Patient) => {
             />
             <svg
               className={`w-6 h-6 ${
-                activeIndex === 3 ? "transform rotate-180" : ""
+                activeIndex === 3 ? 'transform rotate-180' : ''
               }`}
               fill="none"
               stroke="currentColor"
@@ -194,7 +194,7 @@ const Notes = ({ patientId }: Patient) => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
-                d={activeIndex === 4 ? "M19 9l-7 7-7-7" : "M5 15l7-7 7 7"}
+                d={activeIndex === 4 ? 'M19 9l-7 7-7-7' : 'M5 15l7-7 7 7'}
               />
             </svg>
           </div>
@@ -205,7 +205,7 @@ const Notes = ({ patientId }: Patient) => {
             onChange={(e) => {
               dispatch(
                 changeSummaryFields({
-                  fieldName: "assessment",
+                  fieldName: 'assessment',
                   summary: e.target.value,
                 })
               );
@@ -228,7 +228,7 @@ const Notes = ({ patientId }: Patient) => {
             />
             <svg
               className={`w-6 h-6 ${
-                activeIndex === 4 ? "transform rotate-180" : ""
+                activeIndex === 4 ? 'transform rotate-180' : ''
               }`}
               fill="none"
               stroke="currentColor"
@@ -240,7 +240,7 @@ const Notes = ({ patientId }: Patient) => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
-                d={activeIndex === 5 ? "M19 9l-7 7-7-7" : "M5 15l7-7 7 7"}
+                d={activeIndex === 5 ? 'M19 9l-7 7-7-7' : 'M5 15l7-7 7 7'}
               />
             </svg>
           </div>
@@ -251,7 +251,7 @@ const Notes = ({ patientId }: Patient) => {
             onChange={(e) => {
               dispatch(
                 changeSummaryFields({
-                  fieldName: "plan",
+                  fieldName: 'plan',
                   summary: e.target.value,
                 })
               );
@@ -263,10 +263,7 @@ const Notes = ({ patientId }: Patient) => {
 
       <div className="w-full flex justify-end ">
         <div className="bg-purple-500 rounded-xl flex p-4 gap-2">
-          <img
-            src="/images/upload.svg"
-            alt="Interface Image"
-          />
+          <img src="/images/upload.svg" alt="Interface Image" />
           <button
             className="text-white l"
             onClick={(e) => {

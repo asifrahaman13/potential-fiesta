@@ -70,7 +70,6 @@ async def store_data(
     auth_interface: AuthInterface = Depends(auth_service),
     user_interface: UserInterface = Depends(user_service),
 ):
-
     try:
         patient = patient.model_dump()
         current_user = auth_interface.get_current_user(current_user)

@@ -1,30 +1,29 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import QRCode from "qrcode.react";
-import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
-import { ClientConfig, ServerConfig } from "@/app/config/config";
+'use client';
+import React, { useEffect, useState } from 'react';
+import QRCode from 'qrcode.react';
+import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
+import { ClientConfig, ServerConfig } from '@/app/config/config';
 
 type QRCodeGeneratorProps = {
   mrn: string;
 };
 
-
-const QRCodeGenerator = ({mrn}: QRCodeGeneratorProps) => {
-  const [url, setUrl] = useState<string>("");
-  const [password, setRandomPassword] = useState<string>("");
+const QRCodeGenerator = ({ mrn }: QRCodeGeneratorProps) => {
+  const [url, setUrl] = useState<string>('');
+  const [password, setRandomPassword] = useState<string>('');
 
   useEffect(() => {
-    const newUUID = uuidv4().replace(/-/g, "").substring(0, 10);
-    setUrl(ClientConfig()?.CLIENT_URL + "/patient/" + newUUID);
+    const newUUID = uuidv4().replace(/-/g, '').substring(0, 10);
+    setUrl(ClientConfig()?.CLIENT_URL + '/patient/' + newUUID);
     const randomPassword = Math.random().toString(36).slice(-8);
-    console.log("randomPassword", randomPassword);
+    console.log('randomPassword', randomPassword);
     setRandomPassword(randomPassword);
   }, []);
 
   async function confirm() {
-    const backendUrl =  ServerConfig()?.SERVER_URL;
-    const accessToken = localStorage.getItem("access_token");
+    const backendUrl = ServerConfig()?.SERVER_URL;
+    const accessToken = localStorage.getItem('access_token');
     try {
       const response = await axios.post(
         `${backendUrl}/users/create-qr`,
@@ -35,14 +34,14 @@ const QRCodeGenerator = ({mrn}: QRCodeGeneratorProps) => {
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`,
           },
         }
       );
-      console.log("response", response);
+      console.log('response', response);
     } catch (error) {
-      console.error("error", error);
+      console.error('error', error);
     }
   }
 

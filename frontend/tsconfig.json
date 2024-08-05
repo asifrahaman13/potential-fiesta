@@ -21,6 +21,16 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/dashboard/page.tsx", "src/app/test/page.tsx", "src/app/error.tsx", "src/app/404.js", "src/app/dashboard/components/Success.jsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/app/dashboard/page.tsx",
+    "src/app/test/page.tsx",
+    "src/app/error.tsx",
+    "src/app/404.js",
+    "src/app/dashboard/components/Success.jsx"
+  ],
   "exclude": ["node_modules"]
 }

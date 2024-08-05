@@ -1,21 +1,21 @@
-"use client";
+'use client';
 /* eslint-disable @next/next/no-img-element */
-import React, { useState, useEffect, useRef } from "react";
-import Markdown from "react-markdown";
+import React, { useState, useEffect, useRef } from 'react';
+import Markdown from 'react-markdown';
 
 type Message = {
-  type: "client" | "server";
+  type: 'client' | 'server';
   message: string;
 };
 
 export default function Page({ params }: { params: { slug: string } }) {
   const { slug } = params;
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const websocketRef = useRef<WebSocket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [token, setToken] = useState<string | null>(null);
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState('');
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setCode(e.target.value);
@@ -25,16 +25,16 @@ export default function Page({ params }: { params: { slug: string } }) {
     async function getId() {
       try {
         // Get the token from local storage.
-        const idToken = "anything";
+        const idToken = 'anything';
 
         // If token is present, then create a websocket connection.
         if (idToken) {
-          console.log("idToken:", idToken);
+          console.log('idToken:', idToken);
           setToken(idToken);
-          console.log("token:", token);
+          console.log('token:', token);
 
           //  Get the web socket connection URI from the config file.
-          const websocket_uri = process.env.NEXT_PUBLIC_BACKEND_SOCKET || "";
+          const websocket_uri = process.env.NEXT_PUBLIC_BACKEND_SOCKET || '';
 
           // Create a websocket connection.
           const websocket = new WebSocket(
@@ -46,39 +46,39 @@ export default function Page({ params }: { params: { slug: string } }) {
 
           // Set the onopen, onmessage, onerror and onclose event listeners.
           websocket.onopen = () => {
-            console.log("WebSocket connection opened");
+            console.log('WebSocket connection opened');
             setIsConnected(true);
           };
 
           // On receiving a message, parse the message and add it to the messages array.
           websocket.onmessage = (event) => {
             try {
-              console.log("Received message:", event.data);
+              console.log('Received message:', event.data);
               // Parse the message on receiving from the client.
               const receivedMessage = JSON.parse(event.data);
 
               // Add the message to the messages array.
               setMessages((prevMessages) => [
                 ...prevMessages,
-                { type: "server", message: receivedMessage },
+                { type: 'server', message: receivedMessage },
               ]);
             } catch (error) {
-              console.log("Error in onmessage:", error);
+              console.log('Error in onmessage:', error);
             }
           };
 
           // On error, log the error message.
           websocket.onerror = (error) => {
-            console.log("WebSocket error:", error);
+            console.log('WebSocket error:', error);
           };
 
           // On closing the connection, log the reason.
           websocket.onclose = (event) => {
-            console.log("WebSocket connection closed:", event.reason);
+            console.log('WebSocket connection closed:', event.reason);
           };
         }
       } catch (error) {
-        console.error("Error in getId:", error);
+        console.error('Error in getId:', error);
       }
     }
     getId();
@@ -95,13 +95,13 @@ export default function Page({ params }: { params: { slug: string } }) {
     if (websocketRef.current) {
       const messageObject = { query: message, password: code };
       websocketRef.current.send(JSON.stringify(messageObject));
-      setMessage("");
+      setMessage('');
     }
 
     // Add the message to the messages array.
     setMessages((prevMessages) => [
       ...prevMessages,
-      { type: "client", message: message },
+      { type: 'client', message: message },
     ]);
   };
 
@@ -145,7 +145,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 
           {messages.map((item, index) => (
             <div key={index}>
-              {item.type === "client" && (
+              {item.type === 'client' && (
                 <div className="flex flex-row justify-end mb-2">
                   <div className="rounded-md max-w-4/5 bg-blue-500 text-white p-2 text-end">
                     <Markdown className="text-base">{item.message}</Markdown>
@@ -153,7 +153,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                 </div>
               )}
 
-              {item.type !== "client" && (
+              {item.type !== 'client' && (
                 <div className="flex flex-row justify-start mb-2">
                   <div className="rounded-md w-4/5 bg-gray-100 text-black p-2">
                     <Markdown className="text-base">{item.message}</Markdown>

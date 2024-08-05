@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { v4 as uuidv4 } from "uuid";
+import { createSlice } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid';
 
 const generateUniqueId = () => {
   const fullUuid = uuidv4();
@@ -13,7 +13,9 @@ const generateUniqueId = () => {
 
   if (!isLetter) {
     // If the first character is not a letter, replace it with a random letter
-    const randomLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // A-Z
+    const randomLetter = String.fromCharCode(
+      65 + Math.floor(Math.random() * 26)
+    ); // A-Z
     return randomLetter + shortUuid.substring(1);
   }
 
@@ -21,21 +23,21 @@ const generateUniqueId = () => {
 };
 
 export const pollsSlice = createSlice({
-  name: "Polls slice",
+  name: 'Polls slice',
   initialState: {
     showModal: false,
     showCreatePoll: false,
     showZapPoll: false,
     showRecordings: false,
     patientDetails: {
-      mrn: "",
-      visitId: "",
-      timestamp:"",
-      patient_name: "",
-      date: "",
-      dob:"",
-      gender:"",
-      details:[""]
+      mrn: '',
+      visitId: '',
+      timestamp: '',
+      patient_name: '',
+      date: '',
+      dob: '',
+      gender: '',
+      details: [''],
     },
   },
   reducers: {
@@ -59,24 +61,33 @@ export const pollsSlice = createSlice({
       const { name, value } = action.payload;
       console.log(name, value);
       state.patientDetails = { ...state.patientDetails, [name]: value };
-      console.log("The new data", JSON.parse(JSON.stringify(state.patientDetails)))
+      console.log(
+        'The new data',
+        JSON.parse(JSON.stringify(state.patientDetails))
+      );
     },
 
     resetData: (state) => {
       state.patientDetails = {
-        mrn: "",
-        visitId: "",
-        timestamp:"",
-        patient_name: "",
-        date: "",
-        dob:"",
-        gender:"",
-        details:[""]
-    }
-  }}
-  
+        mrn: '',
+        visitId: '',
+        timestamp: '',
+        patient_name: '',
+        date: '',
+        dob: '',
+        gender: '',
+        details: [''],
+      };
+    },
+  },
 });
 
-export const { newPatient, startNewPatient, setPatientData, showHistory, resetData } = pollsSlice.actions;
+export const {
+  newPatient,
+  startNewPatient,
+  setPatientData,
+  showHistory,
+  resetData,
+} = pollsSlice.actions;
 
 export default pollsSlice.reducer;

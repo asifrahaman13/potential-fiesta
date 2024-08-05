@@ -17,6 +17,7 @@ class Prompts(Enum):
     
     """
 
+
 """
 The Format enum class have the prompts for formatting the data to special use cases.
 """

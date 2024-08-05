@@ -1,22 +1,41 @@
-version: '3.10'
-
 services:
-  app:
+  redis:
+    image: "redis:alpine"
+  
+  mongodb:
+    image: "mongo:latest"
+    volumes:
+      - ./data:/data/db
+    networks:
+      - potential-fiesta
+      
+  backend:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
-    environment:
-      - ENVIRONMENT=production
     depends_on:
-      - db
+      - redis
+    command: >
+      sh -c "     
+      uvicorn src.main:app --host 0.0.0.0"
+    volumes:
+      - .:/app
+    networks:
+      - potential-fiesta
 
-  db:
-    image: "postgres:latest"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "password"
-      POSTGRES_DB: "mydatabase"
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - potential-fiesta
+
+networks:
+  potential-fiesta:
