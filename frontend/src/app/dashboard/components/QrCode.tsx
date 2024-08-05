@@ -67,7 +67,7 @@ const QRCodeGenerator = ({ mrn }: QRCodeGeneratorProps) => {
           </div>
           <div className="flex justify-center p-6 border-t border-gray-200">
             <button
-              className="rounded-lg bg-indigo-600 px-4 py-2 text-white hover:bg-blue-700 transition duration-200"
+              className="rounded-lg bg-indigo-700 px-4 py-2 text-white hover:bg-blue-700 transition duration-200"
               onClick={() => {
                 confirm();
               }}

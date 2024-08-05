@@ -6,6 +6,7 @@ WORKDIR /app
 
 # Install system dependencies and Poetry
 RUN apt-get update && \ 
+    apt-get install -y curl && \
     curl -sSL https://install.python-poetry.org | python3 - && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -13,11 +14,14 @@ RUN apt-get update && \
 # Add Poetry to PATH
 ENV PATH="/root/.local/bin:$PATH"
 
+# Verify Poetry installation
+RUN poetry --version
+
 # Copy the pyproject.toml and poetry.lock files to the container
 COPY pyproject.toml poetry.lock ./
 
 # Install dependencies using Poetry
-RUN  poetry install 
+RUN poetry install --no-root
 
 # Copy the rest of the application into the container
 COPY . .
