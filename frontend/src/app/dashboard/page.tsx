@@ -18,7 +18,7 @@ import {
   user,
 } from '@/static/dashboard';
 
-export default function Example() {
+export default function Page() {
   const workspaceHeader = useSelector(
     (state: RootState) => state.workspaceHeader
   );
