@@ -1,6 +1,6 @@
 from fastapi import WebSocket
 import redis
-
+from config.config import REDIS_ENDPOINT
 
 """
 The ConnectionManager class is responsible for managing WebSocket connections. It stores the WebSocket objects 
@@ -12,9 +12,7 @@ the connections.
 
 class ConnectionManager:
     def __init__(self):
-        self.redis_client = redis.Redis(
-            host="localhost", port=6379, decode_responses=True
-        )
+        self.redis_client = redis.from_url(REDIS_ENDPOINT)
         self.active_connections = {}
 
     async def connect(

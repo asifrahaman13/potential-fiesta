@@ -25,4 +25,4 @@ COPY . .
 EXPOSE 3000
 
 # Command to build and start the Next.js application with Bun
-CMD ["bun","run", "build", "&&", "bun", "run", "start"]
+CMD ["bun","run", "build", "&&", "bun", "run", "start", "--host", "0.0.0.0"]
