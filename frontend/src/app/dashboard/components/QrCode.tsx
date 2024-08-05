@@ -48,7 +48,7 @@ const QRCodeGenerator = ({ mrn }: QRCodeGeneratorProps) => {
   return (
     <React.Fragment>
       <div className="flex justify-center items-center  bg-gray-100 p-4">
-        <div className="bg-white rounded-lg shadow-lg w-full max-w-md">
+        <div className="bg-white rounded-lg shadow-lg w-full">
           <div className="w-full flex justify-center items-center p-6">
             <div className="flex flex-col gap-4 w-full">
               <p className="font-semibold text-2xl text-center text-gray-800">
