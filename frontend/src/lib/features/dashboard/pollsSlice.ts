@@ -41,8 +41,8 @@ export const pollsSlice = createSlice({
   reducers: {
     newPatient: (state) => {
       state.showModal = !state.showModal;
-      const uniqueId = generateUniqueId();
-      state.patientDetails.visitId = uniqueId;
+      state.patientDetails.visitId = generateUniqueId();
+      state.patientDetails.mrn = generateUniqueId();
     },
 
     showHistory: (state) => {

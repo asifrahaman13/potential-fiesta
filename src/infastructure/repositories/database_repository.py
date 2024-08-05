@@ -1,11 +1,12 @@
 import logging
 from typing import Any, Dict, List
 from pymongo import MongoClient
+from config.config import MONGO_URI
 
 class DatabaseRepository:
 
     def __init__(self):
-        self.__client = MongoClient("mongodb://localhost:27017/")
+        self.__client = MongoClient(MONGO_URI)
         self.__database = self.__client["fiesta"]
 
     def find_single_entity_by_field_name(

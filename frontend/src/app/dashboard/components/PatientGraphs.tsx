@@ -70,9 +70,7 @@ const DataScreen: React.FC = () => {
       <div>
         <h1 className="text-2xl font-bold mb-4 text-gray-400">PATIENT GRAPH</h1>
         <p className="text-sm mb-4">
-          **This screen displays a graph of the general health metrics recorded
-          by the user. We strongly recommend users track their health metrics
-          periodically and visualize them better with our graphs.
+        All the detailes of the patient will be shown here. The details are eentered by the patient himself/herself. 
         </p>
       </div>
 

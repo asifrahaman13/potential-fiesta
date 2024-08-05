@@ -148,14 +148,14 @@ const History: React.FC<PageProps> = ({ patientId, patientName }) => {
               </div>
 
               {header === "notes" && <Notes patientId={patientId} />}
-              {header == "qr-code" && <QrCode />}
+              {header == "qr-code" && <QrCode mrn={patientData.mrn}/>}
               {header == "patient_data" && <PatientGraphs />}
             </div>
             <div
-              className={` w-full xl:w-1/3 bg-white p-4  h-screen no-scrollbar overflow-y-auto p-b-8 mb-12 flex flex-col gap-4`}
+              className={` w-full xl:w-1/3 bg-white p-4   no-scrollbar overflow-y-auto p-b-8 mb-12 flex flex-col gap-4`}
             >
               <div className="flex">
-                <div>{">>"}</div>
+      
                 <div className="text-xl ml-auto">Transcript</div>
               </div>
 
@@ -168,7 +168,7 @@ const History: React.FC<PageProps> = ({ patientId, patientName }) => {
                   <img src="/images/evva/mic.svg" alt="" />
                 </div>
               </div>
-              <div className="flex flex-col gap-4 mt-6 p-  ">
+              <div className="flex flex-col gap-4 mt-6 h-5/6 overflow-y-scroll no-scrollbar ">
                 {historySlice?.details.map((item, index) => (
                   <>
                     {item != null && item !== "" && (

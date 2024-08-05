@@ -304,7 +304,6 @@ const Visits = () => {
           <div className="w-full flex items-center p-4 gap-2">
             <img src="/images/medical_plus.svg" alt="" />
             <div>Visits</div>
-            <button className="ml-auto">{"<<"}</button>
           </div>
           <div className="w-full  items-center flex flex-row ">
             <button

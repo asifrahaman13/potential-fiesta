@@ -3,28 +3,33 @@ import React, { useEffect, useState } from "react";
 import QRCode from "qrcode.react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-import { headers } from "next/headers";
+import { ClientConfig, ServerConfig } from "@/app/config/config";
 
-const QRCodeGenerator = () => {
+type QRCodeGeneratorProps = {
+  mrn: string;
+};
+
+
+const QRCodeGenerator = ({mrn}: QRCodeGeneratorProps) => {
   const [url, setUrl] = useState<string>("");
   const [password, setRandomPassword] = useState<string>("");
 
   useEffect(() => {
     const newUUID = uuidv4().replace(/-/g, "").substring(0, 10);
-    setUrl("http://localhost:3000" + "/patient/" + newUUID);
+    setUrl(ClientConfig()?.CLIENT_URL + "/patient/" + newUUID);
     const randomPassword = Math.random().toString(36).slice(-8);
     console.log("randomPassword", randomPassword);
     setRandomPassword(randomPassword);
   }, []);
 
   async function confirm() {
-    const backendUrl = "http://localhost:8000";
+    const backendUrl =  ServerConfig()?.SERVER_URL;
     const accessToken = localStorage.getItem("access_token");
     try {
       const response = await axios.post(
         `${backendUrl}/users/create-qr`,
         {
-          mrn: "sayzputt",
+          mrn: mrn,
           url: url,
           password: password,
         },

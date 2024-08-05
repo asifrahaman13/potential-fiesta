@@ -58,7 +58,6 @@ async def get_protected_data(
     auth_interface: AuthInterface = Depends(auth_service),
 ):
     user = auth_interface.get_current_user(current_user)
-
     if user == False:
         return HttePrequestErrors.unauthorized()
     return {"message": True, "user": user}
@@ -73,12 +72,10 @@ async def store_data(
 ):
 
     try:
-
         patient = patient.model_dump()
         current_user = auth_interface.get_current_user(current_user)
         patient["user_id"] = current_user
         is_stored = user_interface.store_data(current_user, patient)
-
         return is_stored
     except Exception as e:
         print(e)
@@ -114,12 +111,9 @@ async def get_data(
     try:
         user = auth_interface.get_current_user(current_user)
         user_data = user_interface.get_data(user)
-        print(type(user_data))
+        return user_data
     except Exception as e:
-
         return HttePrequestErrors.internal_server_error()
-
-    return user_data
 
 
 # Router to get the patient data of a particular patient including the history of the patient.
@@ -139,6 +133,7 @@ async def get_data(
     except Exception as e:
         return HttePrequestErrors.internal_server_error()
     return user_data
+
 
 @router.post("/get-patient-visits")
 async def get_data(
@@ -160,15 +155,15 @@ async def get_data(
 
 @router.post("/generate-summary")
 async def generate_summary(
-    summary: Summary,  # Annotate patient_id as a string
+    summary: Summary,
     current_user: str = Depends(get_current_user),
     auth_interface: AuthInterface = Depends(auth_service),
     user_interface: UserInterface = Depends(user_service),
 ):
     summary = summary.model_dump()
-    # user = auth_interface.get_current_user(current_user)
-    # if user == False:
-    #     return HttePrequestErrors.unauthorized()
+    user = auth_interface.get_current_user(current_user)
+    if user == False:
+        return HttePrequestErrors.unauthorized()
     user_data = []
     try:
         user_data = user_interface.generate_summary(
@@ -209,7 +204,6 @@ async def update_transcript(
 ):
     patient = patient.model_dump()
     user = auth_interface.get_current_user(current_user)
-    print(patient)
     if user == False:
         return HttePrequestErrors.unauthorized()
     try:
@@ -223,7 +217,6 @@ async def update_transcript(
     return False
 
 
-
 @router.post("/create-qr")
 async def create_qr(
     qr_data: QrData,
@@ -231,11 +224,7 @@ async def create_qr(
     auth_interface: AuthInterface = Depends(auth_service),
     user_interface: UserInterface = Depends(user_service),
 ):
-    print(current_user)
     user = auth_interface.get_current_user(current_user)
-
-    print(qr_data)
-
     if user == False:
         return HttePrequestErrors.unauthorized()
     qr_data = qr_data.model_dump()

@@ -1,29 +1,35 @@
 "use client";
-import { newPatient, startNewPatient, setPatientData, resetData } from "@/lib/features/dashboard/pollsSlice";
+import {
+  newPatient,
+  startNewPatient,
+  setPatientData,
+  resetData,
+} from "@/lib/features/dashboard/pollsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import { saveData } from "@/app/api/patients/history";
-import { setAllHistory, appendCurrentHistory } from "@/lib/features/history/allHistorySlice";
-
+import {
+  setAllHistory,
+  appendCurrentHistory,
+} from "@/lib/features/history/allHistorySlice";
 
 const CreatePoll = () => {
+  function getTimeString() {
+    const timestamp = Date.now();
+    const date = new Date(timestamp);
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    return `${hours}:${minutes}`;
+  }
 
-function getTimeString() {
-  const timestamp = Date.now();
-  const date = new Date(timestamp);
-  const hours = date.getHours().toString().padStart(2, "0");
-  const minutes = date.getMinutes().toString().padStart(2, "0");
-  return `${hours}:${minutes}`;
-}
-
-function getDateString() {
-  const timestamp = Date.now(); // Example timestamp
-  const date = new Date(timestamp);
-  const year = date.getFullYear().toString();
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
+  function getDateString() {
+    const timestamp = Date.now(); // Example timestamp
+    const date = new Date(timestamp);
+    const year = date.getFullYear().toString();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
   const pollsSlice = useSelector((state: RootState) => state.polls);
   const dispatch = useDispatch();
 
@@ -37,12 +43,12 @@ function getDateString() {
     const formattedTime = getTimeString();
     console.log(formattedTime);
     const formatCurrDate = getDateString();
-    console.log(formatCurrDate)
+    console.log(formatCurrDate);
     dispatch(appendCurrentHistory({ newData: pollsSlice.patientDetails }));
     dispatch(setPatientData({ name: "timestamp", value: formattedTime }));
-    dispatch(setPatientData({ name: "date", value: formatCurrDate })); 
+    dispatch(setPatientData({ name: "date", value: formatCurrDate }));
     try {
-       const access_token = localStorage.getItem("access_token") || "";
+      const access_token = localStorage.getItem("access_token") || "";
       const response = await saveData(access_token, pollsSlice.patientDetails);
       // dispatch(resetData())
     } catch (err) {
@@ -72,10 +78,17 @@ function getDateString() {
                 </div>
                 <div className="flex flex-col xl:flex-row ">
                   <div className="w-full p-4 bg-Almost-white flex flex-col gap-2 ">
-                    <div className="">The system will allow users to auto-pull appointments from EHR or search for patients by name or MRN once the EHR integration is activated during the pilot.</div>
+                    <div className="">
+                      The system will allow users to auto-pull appointments from
+                      EHR or search for patients by name or MRN once the EHR
+                      integration is activated during the pilot.
+                    </div>
 
                     <div className="mb-8">
-                      <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
                         Visit ID
                       </label>
                       <div className="mt-2">
@@ -87,13 +100,18 @@ function getDateString() {
                           // placeholder="E.g. usernameandid "
                           value={pollsSlice.patientDetails.visitId}
                           onChange={(e) => {
-                            dispatch(setPatientData({ visitId: e.target.value }));
+                            dispatch(
+                              setPatientData({ visitId: e.target.value })
+                            );
                           }}
                         />
                       </div>
                     </div>
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
                         Patient name
                       </label>
                       <div className="mt-2">
@@ -105,13 +123,21 @@ function getDateString() {
                           placeholder="Eg. Adam Stephen"
                           value={pollsSlice.patientDetails.patient_name}
                           onChange={(e) => {
-                            dispatch(setPatientData({ name: "patient_name", value: e.target.value }));
+                            dispatch(
+                              setPatientData({
+                                name: "patient_name",
+                                value: e.target.value,
+                              })
+                            );
                           }}
                         />
                       </div>
                     </div>
                     <div className="mb-8">
-                      <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
                         MRN
                       </label>
                       <div className="mt-2">
@@ -123,14 +149,22 @@ function getDateString() {
                           // placeholder="E.g. usernameandid "
                           value={pollsSlice.patientDetails.mrn}
                           onChange={(e) => {
-                            dispatch(setPatientData({ name: "mrn", value: e.target.value }));
+                            dispatch(
+                              setPatientData({
+                                name: "mrn",
+                                value: e.target.value,
+                              })
+                            );
                           }}
                         />
                       </div>
                     </div>
 
                     <div className="mb-8">
-                      <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
                         DOB
                       </label>
                       <div className="mt-2">
@@ -142,13 +176,21 @@ function getDateString() {
                           // placeholder="E.g. usernameandid "
                           value={pollsSlice.patientDetails.dob}
                           onChange={(e) => {
-                            dispatch(setPatientData({ name: "dob", value: e.target.value }));
+                            dispatch(
+                              setPatientData({
+                                name: "dob",
+                                value: e.target.value,
+                              })
+                            );
                           }}
                         />
                       </div>
                     </div>
                     <div className="mb-8">
-                      <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
                         Gender
                       </label>
                       <div className="mt-2">
@@ -160,7 +202,12 @@ function getDateString() {
                           // placeholder="E.g. usernameandid "
                           value={pollsSlice.patientDetails.gender}
                           onChange={(e) => {
-                            dispatch(setPatientData({ name: "gender", value: e.target.value }));
+                            dispatch(
+                              setPatientData({
+                                name: "gender",
+                                value: e.target.value,
+                              })
+                            );
                           }}
                         />
                       </div>
