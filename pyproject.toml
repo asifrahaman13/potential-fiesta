@@ -11,7 +11,7 @@ openai = "^1.38.0"
 langchain = "^0.2.12"
 ai71 = "^0.0.18"
 fastapi = "^0.112.0"
-uvicorn = "^0.30.5"
+uvicorn = {extras = ["standard"], version = "^0.30.5"}
 pymongo = "^4.8.0"
 python-dotenv = "1.0.1"
 python-jose = "^3.3.0"
