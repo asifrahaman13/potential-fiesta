@@ -46,6 +46,9 @@ export const historySlice = createSlice({
   name: 'History slice',
   initialState,
   reducers: {
+    resetSummary: (state) => {
+      state.summary = initialState.summary;
+    },
     setBasicData: (state, action: PayloadAction<SetBasicDataPayload>) => {
       const { summary } = action.payload;
       state.summary = summary;
@@ -83,6 +86,7 @@ export const {
   changeTranscript,
   changeSummaryFields,
   setTranscriptions,
+  resetSummary,
 } = historySlice.actions;
 
 export default historySlice.reducer;

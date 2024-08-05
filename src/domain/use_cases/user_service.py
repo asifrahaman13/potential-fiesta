@@ -66,47 +66,7 @@ class UserService(UserInterface):
         return result
 
     def generate_summary(self, patient_id: str, data: list[str]):
-
-        #     print(patient_id, data)
-        #     messages = []
-        #     messages.append(
-        #         {
-        #             "role": "system",
-        #             "content": """You are a helpful assistant. Your job is to provide a detailed summary on the content provided by the user. Your response should be in the form of json response. The keys of the json data should be as follows: \n
-        #    - summmary
-        #    - subjective
-        #    - objective
-        #    - assessment
-        #    - plan
-        #   \n
-
-        #   """,
-        #         }
-        #     )
-
-        #     messages.append(
-        #         {
-        #             "role": "user",
-        #             "content": "".join(data),
-        #         },
-        #     )
-
-        #     client = AI71(api_key=AI71_API_KEY)
-        #     completion = client.chat.completions.create(
-        #         model="tiiuae/falcon-180b-chat",
-        #         messages=messages,
-        #         max_tokens=1000,
-        #         temperature=0.7,
-        #     )
-        #     raw_string = (
-        #         completion.choices[0].message.content.strip("```json\n").strip("```")
-        #     )
-        #     print(raw_string)
-
-        #     json_object = json.loads(raw_string)
-
         json_object = self.summary_respository.generate_summary(data)
-
         result = self.database_repository.insert_field(
             "patient_data", "visitId", patient_id, "summary", json_object
         )
@@ -115,9 +75,12 @@ class UserService(UserInterface):
             return json_object
 
     def get_summary(self, patient_id: str):
-        return self.database_repository.find_single_entity_by_field_name(
-            "patient_data", "visitId", patient_id
-        )["summary"]
+        try:
+            return self.database_repository.find_single_entity_by_field_name(
+                "patient_data", "visitId", patient_id
+            )["summary"]
+        except KeyError:
+            return None
 
     def update_qr(self, patient_id: str, data: dict):
         return self.database_repository.insert_field(

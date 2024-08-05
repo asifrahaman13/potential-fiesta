@@ -183,10 +183,11 @@ async def get_summary(
     user_data = []
     try:
         user_data = user_interface.get_summary(patient_id["visitId"])
+        if user_data is None:
+            return HttePrequestErrors.not_found()
+        return user_data
     except Exception as e:
-        return HttePrequestErrors.internal_server_error()
-
-    return user_data
+        return HttePrequestErrors.not_found()
 
 
 @router.post("/update-transcript")

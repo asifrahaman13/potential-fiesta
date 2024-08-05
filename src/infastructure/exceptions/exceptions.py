@@ -27,3 +27,6 @@ class HttePrequestErrors:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Server error"
         )
+
+    def not_found():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found")

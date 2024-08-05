@@ -266,6 +266,7 @@ const Visits = () => {
   };
 
   const [patientsVisits, setPatientsVisits] = useState<HistoryItem[]>([]);
+  const [recordType, setRecordType] = useState('allRecords');
   async function findPatientHistory() {
     const access_token = localStorage.getItem('access_token');
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -285,6 +286,7 @@ const Visits = () => {
       if (response?.status === 200) {
         console.log(response.data);
         setPatientsVisits(response.data);
+        setRecordType('searchRecords');
       }
     }
   }
@@ -340,40 +342,77 @@ const Visits = () => {
             </div>
           </div>
 
-          {patientsVisits?.map((item, index) => (
-            <>
-              {item.visitId !== '' && (
-                <div className="w-full flex  flex-col gap-0" key={index}>
-                  <button
-                    className="w-full border border-gray-100  p-4 flex flex-col   m-0 hover:bg-Amber-Orange"
-                    onClick={(e) => {
-                      setPatient(item.visitId);
-                      setPatientName(item.patient_name);
-                      dispatch(showHistory());
-                    }}
-                  >
-                    <div className="flex items-center">
-                      <img src="/images/visits/done.svg" alt="" />
-                      <div> {item.timestamp}</div>
-                    </div>
-                    <div>
-                      <div className="font-semibold p-1">
-                        {item.patient_name}
+          {recordType === 'searchRecords' &&
+            patientsVisits?.map((item, index) => (
+              <>
+                {item.visitId !== '' && (
+                  <div className="w-full flex  flex-col gap-0" key={index}>
+                    <button
+                      className="w-full border border-gray-100  p-4 flex flex-col   m-0 hover:bg-Amber-Orange"
+                      onClick={(e) => {
+                        setPatient(item.visitId);
+                        setPatientName(item.patient_name);
+                        dispatch(showHistory());
+                      }}
+                    >
+                      <div className="flex items-center">
+                        <img src="/images/visits/done.svg" alt="" />
+                        <div> {item.timestamp}</div>
                       </div>
-                    </div>
-                    <div className="flex ">
-                      <span className="text-gray-400 p-1"> {item.dob}</span>
-                      <span className="text-gray-400 p-1"> {'.'}</span>
-                      <span className="text-gray-400 p-1">
-                        {' '}
-                        #{item.visitId}{' '}
-                      </span>
-                    </div>
-                  </button>
-                </div>
-              )}
-            </>
-          ))}
+                      <div>
+                        <div className="font-semibold p-1">
+                          {item.patient_name}
+                        </div>
+                      </div>
+                      <div className="flex ">
+                        <span className="text-gray-400 p-1"> {item.dob}</span>
+                        <span className="text-gray-400 p-1"> {'.'}</span>
+                        <span className="text-gray-400 p-1">
+                          {' '}
+                          #{item.visitId}{' '}
+                        </span>
+                      </div>
+                    </button>
+                  </div>
+                )}
+              </>
+            ))}
+
+          {recordType === 'allRecords' &&
+            allHistorySlice.patientDetails?.map((item, index) => (
+              <>
+                {item.visitId !== '' && (
+                  <div className="w-full flex  flex-col gap-0" key={index}>
+                    <button
+                      className="w-full border border-gray-100  p-4 flex flex-col   m-0 hover:bg-Amber-Orange"
+                      onClick={(e) => {
+                        setPatient(item.visitId);
+                        setPatientName(item.patient_name);
+                        dispatch(showHistory());
+                      }}
+                    >
+                      <div className="flex items-center">
+                        <img src="/images/visits/done.svg" alt="" />
+                        <div> {item.timestamp}</div>
+                      </div>
+                      <div>
+                        <div className="font-semibold p-1">
+                          {item.patient_name}
+                        </div>
+                      </div>
+                      <div className="flex ">
+                        <span className="text-gray-400 p-1"> {item.dob}</span>
+                        <span className="text-gray-400 p-1"> {'.'}</span>
+                        <span className="text-gray-400 p-1">
+                          {' '}
+                          #{item.visitId}{' '}
+                        </span>
+                      </div>
+                    </button>
+                  </div>
+                )}
+              </>
+            ))}
 
           <div className="w-full flex flex-col gap-0 p-4 mt-auto">
             <div className="mt-auto flex w-full p-6 gap-1">

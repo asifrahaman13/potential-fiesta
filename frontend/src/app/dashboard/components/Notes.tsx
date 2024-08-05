@@ -66,7 +66,7 @@ const Notes = ({ patientId }: Patient) => {
 
           <textarea
             className="text-gray-600 mt-4 outline-none w-full h-auto flex flex-wrap break-words word-wrap"
-            value={historySlice?.summary.summary}
+            value={historySlice?.summary?.summary}
             onChange={(e) => {
               dispatch(
                 changeSummaryFields({

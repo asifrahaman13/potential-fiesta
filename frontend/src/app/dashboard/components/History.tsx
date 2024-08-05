@@ -10,6 +10,7 @@ import { RootState } from '@/lib/store';
 import {
   setBasicData,
   setTranscriptions,
+  resetSummary,
 } from '@/lib/features/history/historySlice';
 import { changeTranscript } from '@/lib/features/history/historySlice';
 import Notes from './Notes';
@@ -40,10 +41,11 @@ const History: React.FC<PageProps> = ({ patientId, patientName }) => {
         const access_token = localStorage.getItem('access_token');
         if (access_token) {
           const summary = await getSummary(access_token, patientId);
-
           if (summary?.status === 200) {
             dispatch(setBasicData({ summary: summary.data }));
             setFetching(false);
+          } else {
+            dispatch(resetSummary());
           }
           const response = await fetchHistory(access_token, patientId);
           if (response?.status === 200) {
@@ -61,7 +63,7 @@ const History: React.FC<PageProps> = ({ patientId, patientName }) => {
           }
         }
       } catch (error) {
-        console.log(error);
+        throw new Error('Error fetching history');
       }
     }
     GetPatientHisory();
