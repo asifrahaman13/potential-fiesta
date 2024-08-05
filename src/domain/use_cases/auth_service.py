@@ -5,11 +5,8 @@ from src.domain.interfaces.auth_interface import AuthInterface
 
 class AuthenticationService:
 
-    def __call__(self) -> AuthInterface:
-        return self
-
-    def __init__(self, auth_repository=AuthRepository):
-        self.auth_repository = auth_repository()
+    def __init__(self, auth_repository):
+        self.auth_repository = auth_repository
 
     def create_access_token(self, data: dict, expires_delta: timedelta):
         return self.auth_repository.create_access_token(data, expires_delta)

@@ -1,5 +1,7 @@
 import json
 import logging
+
+from ai71 import AI71
 from config.config import OPEN_AI_API_KEY
 from src.constants.prompts import Prompts
 import re
@@ -89,6 +91,53 @@ class HealthAssistant:
         result = self.parse_output(output)
 
         return result
+
+
+class SummaryRepository:
+
+    def __init__(self) -> None:
+        self._model = "tiiuae/falcon-180B-chat"
+        self._client = AI71(api_key=AI71_API_KEY)
+
+    def generate_summary(self, data: list[str]):
+        messages = []
+        messages.append(
+            {
+                "role": "system",
+                "content": """You are a helpful assistant. Your job is to provide a detailed summary on the content provided by the user. Your response should be in the form of json response. The keys of the json data should be as follows: \n
+            - summmary
+            - subjective 
+            - objective 
+            - assessment
+            - plan
+            \n
+
+            
+        """,
+            }
+        )
+
+        messages.append(
+            {
+                "role": "user",
+                "content": "".join(data),
+            },
+        )
+
+        completion = self._client.chat.completions.create(
+            model=self._model,
+            messages=messages,
+            max_tokens=1000,
+            temperature=0.7,
+        )
+        raw_string = (
+            completion.choices[0].message.content.strip("```json\n").strip("```")
+        )
+        print(raw_string)
+
+        json_object = json.loads(raw_string)
+
+        return json_object
 
 
 class ChatResponseRepository:

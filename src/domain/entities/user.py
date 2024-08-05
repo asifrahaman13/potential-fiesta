@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from sqlmodel import SQLModel, Field, JSON
 from typing import List, Optional
 
 
@@ -8,44 +7,23 @@ class User(BaseModel):
     username: str | None = None
 
 
-class Vadata(SQLModel, table=True):
-    membername: str | None = Field(primary_key=True)
-    orgname: str | None = None
-    memberpass: str | None = None
-    s3link: str | None = None
-    emailaddress: str | None = None
-
-
 class UserBase(BaseModel):
     membername: str | None = None
     memberpass: str | None = None
 
 
-class UserData(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    user_id: str | None = None
-    visitId: str | None = None
-    mrn: str | None = None
-    details: list[str] = Field(sa_type=JSON, default=[])
-    patient_name: str | None = None
-    timestamp: str | None = None
-    date: str | None = None
-    dob: str | None = None
-    gender: str | None = None
-    prev: list[str] = Field(sa_type=JSON, default=["{}"])
-
-
-class InformLogin(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    username: str = None
-    timestamp: str = None
-
-
-class VeteranData(SQLModel, table=True):
-    __tablename__ = "veteran_data"
-    id: Optional[int] = Field(default=None, primary_key=True)
-    patient_id: str | None = None
-    result: list[str] = Field(sa_type=JSON, default=[])  # Using JSON type for details
+class UserData(BaseModel):
+    id: Optional[int] = None
+    user_id: Optional[str] = None
+    visitId: Optional[str] = None
+    mrn: Optional[str] = None
+    details: Optional[List[str]] = None
+    patient_name: Optional[str] = None
+    timestamp: Optional[str] = None
+    date: Optional[str] = None
+    dob: Optional[str] = None
+    gender: Optional[str] = None
+    prev: Optional[List[dict]] = None
 
 
 class Prev(BaseModel):

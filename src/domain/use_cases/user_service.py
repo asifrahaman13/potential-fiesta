@@ -1,21 +1,13 @@
-import json
 from typing import Any, Dict
-from config.config import AI71_API_KEY
 from src.domain.entities.user import PatientData
 from src.domain.interfaces.user_interface import UserInterface
-from src.infastructure.repositories.database_repository import DatabaseRepository
-from fastapi.security import OAuth2PasswordBearer
-from ai71 import AI71
-
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
 class UserService(UserInterface):
-    def __call__(self) -> UserInterface:
-        return self
 
-    def __init__(self, database_repository: DatabaseRepository):
+    def __init__(self, database_repository, summary_repository):
         self.database_repository = database_repository
+        self.summary_respository = summary_repository
 
     # API to log in the user. Its ch3ecks the user credentials and returns a boolean value
     def check_user(self, membername: str, memberpass: str) -> bool:
@@ -75,44 +67,45 @@ class UserService(UserInterface):
 
     def generate_summary(self, patient_id: str, data: list[str]):
 
-        print(patient_id, data)
-        messages = []
-        messages.append(
-            {
-                "role": "system",
-                "content": """You are a helpful assistant. Your job is to provide a detailed summary on the content provided by the user. Your response should be in the form of json response. The keys of the json data should be as follows: \n
-       - summmary
-       - subjective 
-       - objective 
-       - assessment
-       - plan
-      \n
+        #     print(patient_id, data)
+        #     messages = []
+        #     messages.append(
+        #         {
+        #             "role": "system",
+        #             "content": """You are a helpful assistant. Your job is to provide a detailed summary on the content provided by the user. Your response should be in the form of json response. The keys of the json data should be as follows: \n
+        #    - summmary
+        #    - subjective
+        #    - objective
+        #    - assessment
+        #    - plan
+        #   \n
 
-      
-      """,
-            }
-        )
+        #   """,
+        #         }
+        #     )
 
-        messages.append(
-            {
-                "role": "user",
-                "content": "".join(data),
-            },
-        )
+        #     messages.append(
+        #         {
+        #             "role": "user",
+        #             "content": "".join(data),
+        #         },
+        #     )
 
-        client = AI71(api_key=AI71_API_KEY)
-        completion = client.chat.completions.create(
-            model="tiiuae/falcon-180b-chat",
-            messages=messages,
-            max_tokens=1000,
-            temperature=0.7,
-        )
-        raw_string = (
-            completion.choices[0].message.content.strip("```json\n").strip("```")
-        )
-        print(raw_string)
+        #     client = AI71(api_key=AI71_API_KEY)
+        #     completion = client.chat.completions.create(
+        #         model="tiiuae/falcon-180b-chat",
+        #         messages=messages,
+        #         max_tokens=1000,
+        #         temperature=0.7,
+        #     )
+        #     raw_string = (
+        #         completion.choices[0].message.content.strip("```json\n").strip("```")
+        #     )
+        #     print(raw_string)
 
-        json_object = json.loads(raw_string)
+        #     json_object = json.loads(raw_string)
+
+        json_object = self.summary_respository.generate_summary(data)
 
         result = self.database_repository.insert_field(
             "patient_data", "visitId", patient_id, "summary", json_object

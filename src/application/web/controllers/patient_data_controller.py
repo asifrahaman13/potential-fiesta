@@ -5,22 +5,18 @@ from src.infastructure.repositories.database_repository import DatabaseRepositor
 from src.domain.interfaces.chat_interface import ChatInterface
 from src.domain.use_cases.chat_service import ChatService
 from src.connection_manager.connection_manager import ConnectionManager
+from exports.exports import get_chat_service, get_database_repository
 
 pateiend_router = APIRouter()
 
 manager = ConnectionManager()
-
-database_repository = DatabaseRepository()
-
-chat_response_repository = ChatResponseRepository()
-chat_service = ChatService(chat_response_repository, database_repository)
 
 
 @pateiend_router.websocket("/health_metrics/{client_id}")
 async def websocket_endpoint(
     websocket: WebSocket,
     client_id: str,
-    chat_interface: ChatInterface = Depends(chat_service),
+    chat_interface: ChatInterface = Depends(get_chat_service),
 ):
 
     # Connect the websocket
@@ -62,8 +58,12 @@ async def websocket_endpoint(
 
 
 @pateiend_router.get("/patient-graphs/{patient_id}")
-async def get_patient(patient_id: str):
+async def get_patient(
+    patient_id: str,
+    database_repository: DatabaseRepository = Depends(get_database_repository),
+):
     patient = database_repository.find_single_entity_by_field_name(
         "patient_data", "user_id", patient_id
     )
+
     return patient["data"]

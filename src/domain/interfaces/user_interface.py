@@ -1,9 +1,6 @@
-# src/core/interfaces/user_interface.py
 from abc import ABC, abstractmethod
 from src.domain.entities.user import User
-from typing import Optional
-from datetime import datetime, timedelta
-from src.domain.entities.user import PatientData, InformLogin
+from src.domain.entities.user import PatientData
 
 
 class UserInterface(ABC):

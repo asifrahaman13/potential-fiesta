@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "potential-fiesta"
+version = "0.1.0"
+description = ""
+authors = ["Asif Rahaman <asifrahaman162@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+openai = "^1.38.0"
+langchain = "^0.2.12"
+ai71 = "^0.0.18"
+fastapi = "^0.112.0"
+uvicorn = "^0.30.5"
+pymongo = "^4.8.0"
+python-dotenv = "1.0.1"
+python-jose = "^3.3.0"
+redis = "^5.0.8"
+pre-commit = "^3.8.0"
+black = "^24.8.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

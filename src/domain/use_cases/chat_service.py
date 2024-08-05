@@ -8,13 +8,10 @@ import time
 
 class ChatService:
 
-    def __call__(self) -> None:
-        return self
-
     def __init__(
         self,
-        chat_repository=ChatResponseRepository,
-        database_repository=DatabaseRepository,
+        chat_repository,
+        database_repository,
     ) -> None:
         self.chat_repository = chat_repository
         self.database_repository = database_repository
