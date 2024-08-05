@@ -86,3 +86,11 @@ class UserService(UserInterface):
         return self.database_repository.insert_field(
             "patient_data", "mrn", patient_id, "qr", data
         )
+
+    def get_all_patients(self, doctor_username: str):
+        try:
+            return self.database_repository.find_all_entities_by_field_name(
+                "patient_data", "doctor_username", doctor_username
+            )
+        except KeyError:
+            return None

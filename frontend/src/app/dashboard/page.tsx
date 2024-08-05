@@ -15,7 +15,7 @@ import {
   classNames,
   user,
 } from '@/static/dashboard';
-import Patients from './components/Patients';
+import Patients from './pages/Patients';
 import Companions from './pages/Companions';
 
 export default function Page() {

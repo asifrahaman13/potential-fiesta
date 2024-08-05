@@ -39,3 +39,7 @@ class UserInterface(ABC):
     @abstractmethod
     def update_qr(self, patient_id: str, data: dict):
         pass
+
+    @abstractmethod
+    def get_all_patients(self, doctor_username: str):
+        pass

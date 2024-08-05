@@ -14,6 +14,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
 def get_current_user(token: str = Depends(oauth2_scheme)):
+    print("############", token)
     return token
 
 
@@ -230,3 +231,21 @@ async def create_qr(
         return False
 
     return True
+
+
+@router.get("/all-patients")
+async def get_all_patients(
+    current_user: str = Depends(get_current_user),
+    auth_interface: AuthInterface = Depends(get_auth_service),
+    user_interface: UserInterface = Depends(get_user_service),
+):
+    print(current_user)
+    user = auth_interface.get_current_user(current_user)
+    print(user)
+    if user == False:
+        return HttePrequestErrors.unauthorized()
+    try:
+        all_patients = user_interface.get_all_patients(user)
+        return all_patients
+    except Exception as e:
+        return HttePrequestErrors.internal_server_error()
