@@ -22,11 +22,17 @@ class DatabaseRepository:
             return None
 
     def find_all_entities_by_field_name(
-        self, collection_name: str, field_name: str, field_value: str
+        self,
+        collection_name: str,
+        field_name: str,
+        field_value: str,
+        fetch_number: int = 15,
     ):
         try:
             collection = self.__database[collection_name]
-            result_cursor = collection.find({field_name: field_value})
+            result_cursor = collection.find({field_name: field_value}).limit(
+                fetch_number
+            )
 
             print(f"Found {result_cursor} results")
 

@@ -1,12 +1,10 @@
 import React from 'react';
-import { PatientData } from './Patients';
+import { PatientData } from '@/app/types/Patients_Types';
 
-// Props type for the PatientDetail component
 type PatientDetailProps = {
   patient: PatientData;
 };
 
-// PatientDetail component
 const PatientDetail: React.FC<PatientDetailProps> = ({ patient }) => {
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden p-6 mb-4">
@@ -28,7 +26,7 @@ const PatientDetail: React.FC<PatientDetailProps> = ({ patient }) => {
         {new Date(patient?.date).toLocaleDateString()}
       </p>
       <p className="text-gray-600 mb-2">
-        <strong>DOB:</strong> {new Date(patient?.dob).toLocaleDateString()}
+        <strong>DOB:</strong> {patient?.dob}
       </p>
       <p className="text-gray-600 mb-2">
         <strong>Gender:</strong> {patient?.gender}
@@ -60,7 +58,7 @@ const PatientDetail: React.FC<PatientDetailProps> = ({ patient }) => {
         <strong>Health Data Points:</strong>
       </p>
       <ul className="ml-4 list-disc text-gray-600 mb-2">
-        {patient?.data.map((dataPoint, index) => (
+        {patient?.data.map((dataPoint: any, index: number) => (
           <li key={index}>
             <div>
               <strong>Timestamp:</strong>{' '}

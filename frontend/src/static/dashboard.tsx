@@ -1,7 +1,7 @@
 const navigation = [
-  { name: 'Patients', href: 'visits.svg', current: false },
-  { name: 'Visits', href: 'visits.svg', current: false },
-  { name: 'Companions', href: 'visits.svg', current: false },
+  { name: 'Patients', href: 'patients', current: false },
+  { name: 'Visits', href: 'visits', current: false },
+  { name: 'Companion', href: 'companion', current: false },
 ];
 
 const user = {
