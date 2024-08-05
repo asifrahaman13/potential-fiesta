@@ -20,12 +20,14 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
 @router.post("/login")
 async def all_data(
     user: UserBase,
-    user_interface: UserInterface = Depends(get_auth_service),
+    user_interface: UserInterface = Depends(get_user_service),
     auth_interface: AuthInterface = Depends(get_auth_service),
 ):
     user_data = user.model_dump()
     membername = user_data["membername"]
     memberpass = user_data["memberpass"]
+
+    print(user_data)
 
     try:
         if user_interface.check_user(membername, memberpass):
