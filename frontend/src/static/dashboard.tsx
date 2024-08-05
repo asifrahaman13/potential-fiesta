@@ -1,7 +1,7 @@
 const navigation = [
-  { name: 'Patients', href: 'patients', current: false },
-  { name: 'Visits', href: 'visits', current: false },
-  { name: 'Companion', href: 'companion', current: false },
+  { name: 'Patients', href: '/dashboard/patients', current: false },
+  { name: 'Visits', href: '/dashboard/visits', current: false },
+  { name: 'Companion', href: '/dashboard/companion', current: false },
 ];
 
 const user = {
