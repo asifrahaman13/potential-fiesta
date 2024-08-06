@@ -4,7 +4,6 @@ from typing import Any, List, Dict
 from openai import OpenAI
 from config.config import OPEN_AI_API_KEY
 from src.application.web.controllers.formatting import HealthAssistant
-import concurrent.futures
 from src.application.web.controllers.search import search_result
 
 

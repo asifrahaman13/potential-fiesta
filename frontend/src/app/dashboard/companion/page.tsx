@@ -178,7 +178,10 @@ export default function Page() {
       <div className="flex w-full flex-row justify-center items-center h-screen bg-white overflow-y-hidden">
         <div className="max-w-md md:rounded-lg border-2 w-full h-full md:h-4/5 flex flex-col">
           <div className="flex-grow w-full flex flex-col justify-between bg-[#F7F7F7] overflow-y-scroll no-scrollbar">
-            <div ref={chatContainerRef} className="flex-grow w-full">
+            <div
+              ref={chatContainerRef}
+              className="flex-grow w-full overflow-y-scroll no-scrollbar"
+            >
               {messages.length !== 0 && (
                 <div className="flex justify-center text-sm text-[#979797] w-full my-6">
                   <div className="text-center">
@@ -329,10 +332,10 @@ export default function Page() {
                 onChange={(e) => ChangeValue(e)}
               />
               <button
-                className="flex items-center justify-center p-2 rounded-md text-black"
+                className="flex items-center justify-center p-2 rounded-md text-white bg-gray-500"
                 onClick={sendMessage}
               >
-                Click
+                Send
               </button>
             </div>
           </div>
