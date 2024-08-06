@@ -1,24 +1,24 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status
 from src.domain.interfaces.user_interface import UserInterface
 from fastapi.security import OAuth2PasswordBearer
 from datetime import timedelta
 from src.domain.entities.user import UserBase, UserData, PatientData, PatientDataUpdate
 from src.domain.interfaces.auth_interface import AuthInterface
 from src.domain.entities.chat import Summary
+from fastapi import APIRouter
 from src.infastructure.exceptions.exceptions import HttePrequestErrors
 from src.domain.entities.chat import QrData
 from exports.exports import get_auth_service, get_chat_service, get_user_service
 
-router = APIRouter()
+user_controller = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
 def get_current_user(token: str = Depends(oauth2_scheme)):
-    print("############", token)
     return token
 
 
-@router.post("/login")
+@user_controller.post("/login")
 async def all_data(
     user: UserBase,
     user_interface: UserInterface = Depends(get_user_service),
@@ -48,7 +48,7 @@ async def all_data(
         )
 
 
-@router.get("/authenticate")
+@user_controller.get("/authenticate")
 async def get_protected_data(
     current_user: str = Depends(get_current_user),
     auth_interface: AuthInterface = Depends(get_auth_service),
@@ -59,7 +59,7 @@ async def get_protected_data(
     return {"message": True, "user": user}
 
 
-@router.post("/store-data")
+@user_controller.post("/store-data")
 async def store_data(
     patient: PatientData,
     current_user: str = Depends(get_current_user),
@@ -78,7 +78,7 @@ async def store_data(
     return False
 
 
-@router.post("/append-data")
+@user_controller.post("/append-data")
 async def store_data(
     patient: PatientData,
     current_user: str = Depends(get_current_user),
@@ -95,8 +95,8 @@ async def store_data(
         return False
 
 
-# Router to get the history of all the patients of the doctor.
-@router.get("/get-data")
+# user_controller to get the history of all the patients of the doctor.
+@user_controller.get("/get-data")
 async def get_data(
     current_user: str = Depends(get_current_user),
     auth_interface: AuthInterface = Depends(get_auth_service),
@@ -111,8 +111,8 @@ async def get_data(
         return HttePrequestErrors.internal_server_error()
 
 
-# Router to get the patient data of a particular patient including the history of the patient.
-@router.post("/get-patient")
+# user_controller to get the patient data of a particular patient including the history of the patient.
+@user_controller.post("/get-patient")
 async def get_data(
     patient_id: UserData,
     current_user: str = Depends(get_current_user),
@@ -130,7 +130,7 @@ async def get_data(
     return user_data
 
 
-@router.post("/get-patient-visits")
+@user_controller.post("/get-patient-visits")
 async def get_data(
     patient_id: UserData,
     current_user: str = Depends(get_current_user),
@@ -148,7 +148,7 @@ async def get_data(
     return user_data
 
 
-@router.post("/generate-summary")
+@user_controller.post("/generate-summary")
 async def generate_summary(
     summary: Summary,
     current_user: str = Depends(get_current_user),
@@ -170,7 +170,7 @@ async def generate_summary(
     return user_data
 
 
-@router.post("/get-summary")
+@user_controller.post("/get-summary")
 async def get_summary(
     patient_id: UserData,  # Annotate patient_id as a string
     current_user: str = Depends(get_current_user),
@@ -191,7 +191,7 @@ async def get_summary(
         return HttePrequestErrors.not_found()
 
 
-@router.post("/update-transcript")
+@user_controller.post("/update-transcript")
 async def update_transcript(
     patient: PatientDataUpdate,
     current_user: str = Depends(get_current_user),
@@ -213,7 +213,7 @@ async def update_transcript(
     return False
 
 
-@router.post("/create-qr")
+@user_controller.post("/create-qr")
 async def create_qr(
     qr_data: QrData,
     current_user: str = Depends(get_current_user),
@@ -233,7 +233,7 @@ async def create_qr(
     return True
 
 
-@router.get("/all-patients")
+@user_controller.get("/all-patients")
 async def get_all_patients(
     current_user: str = Depends(get_current_user),
     auth_interface: AuthInterface = Depends(get_auth_service),

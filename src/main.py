@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from src.application.web.controllers import user_controller
+from src.application.web.controllers.user_controller import user_controller
 from fastapi.responses import JSONResponse
 from src.application.web.controllers.patient_data_controller import pateiend_router
+from src.application.web.controllers.chat_controller import chat_router
 
 app = FastAPI()
 
@@ -20,8 +21,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(user_controller.router, prefix="/users", tags=["users"])
+app.include_router(user_controller, prefix="/users", tags=["users"])
 app.include_router(pateiend_router, prefix="/patient", tags=["users"])
+app.include_router(chat_router, prefix="/chat", tags=["chat"])
 
 
 # Health check endpoint
