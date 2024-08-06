@@ -10,8 +10,8 @@ function speakerConfig() {
 
 function ServerConfig() {
   try {
-    const SERVER_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
-    const SERVER_SOCKET = process.env.NEXT_PUBLIC_BACKEND_SOCKET;
+    const SERVER_URL = process.env.NEXT_PUBLIC_BACKEND_URL || '';
+    const SERVER_SOCKET = process.env.NEXT_PUBLIC_BACKEND_SOCKET || '';
     return { SERVER_URL, SERVER_SOCKET };
   } catch (e) {
     throw new Error('Error in ServerConfig');
@@ -20,7 +20,7 @@ function ServerConfig() {
 
 function ClientConfig() {
   try {
-    const CLIENT_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
+    const CLIENT_URL = process.env.NEXT_PUBLIC_FRONTEND_URL || '';
     return { CLIENT_URL };
   } catch (e) {
     throw new Error('Error in ClientConfig');

@@ -57,87 +57,100 @@ export default function Page() {
     await appendData(access_token, patientId, p);
   }
   const [currSpeaker, setCurrSpeaker] = useState('');
-  const speechConfig = SpeechConfig.fromSubscription(
-    speaker?.SPEECH_KEY || '',
-    speaker?.SPEECH_REGION || ''
-  );
-  speechConfig.speechRecognitionLanguage = 'en-US';
-  speechConfig.setServiceProperty(
-    'wordLevelConfidence',
-    'true',
-    ServicePropertyChannel.UriQueryParameter
-  );
-  speechConfig.outputFormat = OutputFormat.Detailed;
-  const audioConfig = AudioConfig.fromDefaultMicrophoneInput();
-  conversationTranscriber = new ConversationTranscriber(
-    speechConfig,
-    audioConfig
-  );
   const [t, setT] = useState<TranscriptionData>({
     visitId: pollsSlice.patientDetails.visitId,
     prev: [],
   });
-
   const initializeSpeechRecognizer = async () => {
-    const access_token = localStorage.getItem('access_token') || '';
-    if (isRecording) {
-      conversationTranscriber.sessionStarted = function (s: any, e: any) {
-        setT((prev) => ({
-          ...prev,
-          visitId: pollsSlice.patientDetails.visitId,
-        }));
-      };
-      conversationTranscriber.sessionStopped = function (s: any, e: any) {
-        conversationTranscriber.stopTranscribingAsync();
-      };
-      conversationTranscriber.canceled = function (s: any, e: any) {
-        conversationTranscriber.stopTranscribingAsync();
-      };
-      conversationTranscriber.transcribed = function (s: any, e: any) {
-        let parts = e.result.speakerId.split('-');
-        parts[0] = 'Speaker';
-        let newSpeakerId = parts.join('-');
-        if (e.result.speakerId != 'Unknown') {
-          console.log(`${newSpeakerId}: ${e.result.text}`);
-          setCurrSpeaker(newSpeakerId);
-          setData((prev) => [...prev, `${newSpeakerId}: ${e.result.text}`]);
-          AppendData(
-            access_token,
-            pollsSlice.patientDetails.visitId,
-            `${newSpeakerId}: ${e.result.text}`
-          );
-
-          setT((prev) => ({
-            ...prev,
-            prev: [
-              ...prev.prev,
-              {
-                privJson: e.result.privJson,
-                privSpeakerId: e.result.privSpeakerId,
-              },
-            ],
-          }));
-        }
-      };
-
-      // Start conversation transcription
-      conversationTranscriber.startTranscribingAsync(
-        function () {},
-        function (err: any) {
-          console.trace('err - starting transcription: ' + err);
-        }
+    try {
+      if (!SpeechConfig) {
+        console.error('SpeechConfig is not defined');
+        return;
+      }
+      const speechConfig = SpeechConfig.fromSubscription(
+        speaker?.SPEECH_KEY || '',
+        speaker?.SPEECH_REGION || ''
       );
 
-      try {
-        await recognizer.startContinuousRecognitionAsync();
-        setIsRecording(true);
-      } catch (error) {
-        console.error('Error starting recognition:', error);
+      speechConfig.speechRecognitionLanguage = 'en-US';
+      speechConfig.setServiceProperty(
+        'wordLevelConfidence',
+        'true',
+        ServicePropertyChannel.UriQueryParameter
+      );
+      speechConfig.outputFormat = OutputFormat.Detailed;
+      const audioConfig = AudioConfig.fromDefaultMicrophoneInput();
+      conversationTranscriber = new ConversationTranscriber(
+        speechConfig,
+        audioConfig
+      );
+
+      const access_token = localStorage.getItem('access_token') || '';
+      if (isRecording) {
+        conversationTranscriber.sessionStarted = function (s: any, e: any) {
+          setT((prev) => ({
+            ...prev,
+            visitId: pollsSlice.patientDetails.visitId,
+          }));
+        };
+        conversationTranscriber.sessionStopped = function (s: any, e: any) {
+          conversationTranscriber.stopTranscribingAsync();
+        };
+        conversationTranscriber.canceled = function (s: any, e: any) {
+          conversationTranscriber.stopTranscribingAsync();
+        };
+        conversationTranscriber.transcribed = function (s: any, e: any) {
+          let parts = e.result.speakerId.split('-');
+          parts[0] = 'Speaker';
+          let newSpeakerId = parts.join('-');
+          if (e.result.speakerId != 'Unknown') {
+            console.log(`${newSpeakerId}: ${e.result.text}`);
+            setCurrSpeaker(newSpeakerId);
+            setData((prev) => [...prev, `${newSpeakerId}: ${e.result.text}`]);
+            AppendData(
+              access_token,
+              pollsSlice.patientDetails.visitId,
+              `${newSpeakerId}: ${e.result.text}`
+            );
+
+            setT((prev) => ({
+              ...prev,
+              prev: [
+                ...prev.prev,
+                {
+                  privJson: e.result.privJson,
+                  privSpeakerId: e.result.privSpeakerId,
+                },
+              ],
+            }));
+          }
+        };
+
+        // Start conversation transcription
+        conversationTranscriber.startTranscribingAsync(
+          function () {},
+          function (err: any) {
+            console.trace('err - starting transcription: ' + err);
+          }
+        );
+
+        try {
+          await recognizer.startContinuousRecognitionAsync();
+          setIsRecording(true);
+        } catch (error) {
+          console.error('Error starting recognition:', error);
+        }
       }
+    } catch (e) {
+      console.log(e);
     }
   };
   useEffect(() => {
-    initializeSpeechRecognizer();
+    try {
+      initializeSpeechRecognizer();
+    } catch (e) {
+      console.log(e);
+    }
 
     return () => {
       if (conversationTranscriber) {
@@ -155,7 +168,7 @@ export default function Page() {
 
   const stopRecording = async () => {
     setRecordState('initial');
-    console.log(t);
+
     setIsRecording(false);
     stopClock();
     conversationTranscriber.stopTranscribingAsync();

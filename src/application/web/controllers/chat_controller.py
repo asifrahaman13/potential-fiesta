@@ -2,7 +2,6 @@ import asyncio
 import logging
 from fastapi import APIRouter, Depends, WebSocket, WebSocketDisconnect
 from src.domain.interfaces.doctor_chat_interface import DoctorChatInterface
-from src.application.web.controllers.function import get_query
 from src.connection_manager.connection_manager import ConnectionManager
 from exports.exports import get_doctor_chat_service
 
@@ -21,7 +20,7 @@ async def websocket_endpoint(
     await asyncio.sleep(0)
     await manager.send_personal_message(
         {
-            "response": "Hello I a your personal assistant. Ask me anything.",
+            "response": "Hello I am your personal assistant. Ask me anything.",
             "followup": False,
             "status": False,
             "finished": True,
