@@ -16,7 +16,7 @@ const LoginPage = () => {
         if (access_token != null) {
           const response = await Authenticate();
           if (response == true) {
-            window.location.href = '/dashboard';
+            window.location.href = '/dashboard/visits';
           }
         }
       } catch (err) {
@@ -50,120 +50,102 @@ const LoginPage = () => {
   }
   return (
     <Fragment>
-      <div className="h-screen">
-        <div className="flex min-h-full w-screen ">
-          <div className="relative hidden w-1/2  lg:block">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 py-6 px-4 sm:px-6 lg:px-8">
+        <div className="flex max-w-4xl w-full shadow-lg rounded-lg overflow-hidden">
+          {/* Image Section */}
+          <div className="relative hidden w-1/2 lg:block">
             <img
               className="absolute inset-0 h-full w-full object-cover"
               src="https://www.sattva.co.in/wp-content/uploads/2022/12/Untitled-1200-%C3%97-630-px.png"
-              alt=""
+              alt="Side Banner"
             />
           </div>
 
-          <div className="flex flex-col justify-center w-full xl:w-1/2 px-4 py-12  lg:flex-none lg:px-20 xl:px-24 bg-gray-50">
+          {/* Form Section */}
+          <div className="flex flex-col justify-center w-full lg:w-1/2 p-8 bg-white">
             <div className="mx-auto w-full max-w-sm lg:w-96">
-              <div>
+              <div className="text-center">
                 <img
-                  className="h-10 w-auto"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=yellow&shade=600"
+                  className="mx-auto h-12 w-auto"
+                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                   alt="Your Company"
                 />
-                <h2 className="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                <h2 className="mt-6 text-3xl font-bold text-gray-900">
                   Sign in to your account
                 </h2>
               </div>
 
-              <div className="mt-10">
+              <div className="mt-8 space-y-6">
                 <div>
-                  <div className="space-y-6">
-                    <div>
-                      <label
-                        htmlFor="email"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        User name
-                      </label>
-                      <div className="mt-2">
-                        <input
-                          id="membername"
-                          name="membername"
-                          type="text"
-                          autoComplete="email"
-                          required
-                          placeholder="e.g example@3"
-                          className="block w-full rounded-md border-2 focus:border-yellow-600 outline-none py-1.5 shadow-sm  ring-gray-300 placeholder:text-gray-400 p-2  sm:text-sm sm:leading-6"
-                          onChange={(e) => {
-                            handleLoginData(e);
-                          }}
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label
-                        htmlFor="password"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        Password
-                      </label>
-                      <div className="mt-2">
-                        <input
-                          id="memberpass"
-                          name="memberpass"
-                          type="password"
-                          autoComplete="current-password"
-                          required
-                          placeholder="Enter your password"
-                          className="block w-full rounded-md border-2 focus:border-yellow-600 outline-none py-1.5 shadow-sm  ring-gray-300 placeholder:text-gray-400 p-2  sm:text-sm sm:leading-6"
-                          onChange={(e) => {
-                            handleLoginData(e);
-                          }}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <input
-                          id="remember-me"
-                          name="remember-me"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-yellow-600 focus:ring-yellow-600"
-                        />
-                        <label
-                          htmlFor="remember-me"
-                          className="ml-3 block text-sm leading-6 text-gray-700"
-                        >
-                          Remember me
-                        </label>
-                      </div>
-
-                      <div className="text-sm leading-6">
-                        <a
-                          href="#"
-                          className="font-semibold text-yellow-600 hover:text-yellow-500"
-                        >
-                          Forgot password?
-                        </a>
-                      </div>
-                    </div>
-
-                    <div>
-                      <button
-                        type="submit"
-                        className="flex w-full justify-center rounded-md bg-yellow-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-yellow-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
-                        onClick={(e) => {
-                          handleLogin();
-                        }}
-                      >
-                        Sign in
-                      </button>
-                    </div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Username
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="membername"
+                      name="membername"
+                      type="text"
+                      autoComplete="email"
+                      required
+                      placeholder="Currently you should enter 'user'"
+                      className="block w-full rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 py-2 px-3 shadow-sm placeholder-gray-400"
+                      onChange={(e) => {
+                        handleLoginData(e);
+                      }}
+                    />
                   </div>
                 </div>
 
-                <div className="mt-10"></div>
+                <div>
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Password
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="memberpass"
+                      name="memberpass"
+                      type="password"
+                      autoComplete="current-password"
+                      required
+                      placeholder="currently you should 'pass'"
+                      className="block w-full rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 py-2 px-3 shadow-sm placeholder-gray-400"
+                      onChange={(e) => {
+                        handleLoginData(e);
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <button
+                    type="submit"
+                    className="w-full flex justify-center bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    onClick={(e) => {
+                      handleLogin();
+                    }}
+                  >
+                    Sign in
+                  </button>
+                </div>
               </div>
+
+              {/* <div className="mt-6 text-center">
+            <p className="text-sm text-gray-600">
+              Don't have an account?{" "}
+              <a
+                href="#"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
+                Sign up
+              </a>
+            </p>
+          </div> */}
             </div>
           </div>
         </div>

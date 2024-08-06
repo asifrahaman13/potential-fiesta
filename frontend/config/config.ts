@@ -1,10 +1,10 @@
 function speakerConfig() {
   try {
-    const SPEECH_KEY = process.env.NEXT_PUBLIC_SPEECH_KEY;
-    const SPEECH_REGION = process.env.NEXT_PUBLIC_SPEECH_REGION;
+    const SPEECH_KEY = process.env.NEXT_PUBLIC_SPEECH_KEY || '';
+    const SPEECH_REGION = process.env.NEXT_PUBLIC_SPEECH_REGION || '';
     return { SPEECH_KEY, SPEECH_REGION };
   } catch (e) {
-    console.log(e);
+    throw new Error('Error in speakerConfig');
   }
 }
 
@@ -14,7 +14,7 @@ function ServerConfig() {
     const SERVER_SOCKET = process.env.NEXT_PUBLIC_BACKEND_SOCKET;
     return { SERVER_URL, SERVER_SOCKET };
   } catch (e) {
-    console.log(e);
+    throw new Error('Error in ServerConfig');
   }
 }
 
@@ -23,7 +23,7 @@ function ClientConfig() {
     const CLIENT_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
     return { CLIENT_URL };
   } catch (e) {
-    console.log(e);
+    throw new Error('Error in ClientConfig');
   }
 }
 

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import QRCode from 'qrcode.react';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
-import { ClientConfig, ServerConfig } from '@/app/config/config';
+import { ClientConfig, ServerConfig } from '../../../../config/config';
 
 type QRCodeGeneratorProps = {
   mrn: string;

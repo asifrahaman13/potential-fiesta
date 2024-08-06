@@ -1,26 +1,16 @@
 'use client';
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useRef, useState } from 'react';
-
-type Location = {
-  latitude: number;
-  longitude: number;
-  zipCode: string;
-};
-
 import Link from 'next/link';
 import { Message } from '@/app/types/chat_Types';
-// import Greetings from "../components/Greetings";
 import MessageState from '@/app/components/MessageState';
-import { RootState } from '@/lib/store';
-import { useDispatch, useSelector } from 'react-redux';
 
 export default function Page() {
   const [messages, setMessages] = useState<Message[]>([]);
   const websocketRef = useRef<WebSocket | null>(null);
   const [userMessage, setUserMessage] = useState<string>('');
   const [messageState, setMessageState] = useState<string | null>(null);
-  // const options = useSelector((state: RootState) => state.selection);
+  const chatContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const accessToken = localStorage.getItem('access_token');
@@ -163,9 +153,6 @@ export default function Page() {
     return host;
   }
 
-  const dispatch = useDispatch();
-  const chatContainerRef = useRef<HTMLDivElement | null>(null);
-
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
@@ -175,9 +162,9 @@ export default function Page() {
 
   return (
     <React.Fragment>
-      <div className="flex w-full flex-row justify-center items-center h-screen bg-white overflow-y-hidden">
-        <div className="max-w-md md:rounded-lg border-2 w-full h-full md:h-4/5 flex flex-col">
-          <div className="flex-grow w-full flex flex-col justify-between bg-[#F7F7F7] overflow-y-scroll no-scrollbar">
+      <div className="flex w-full flex-row justify-center items-center h-screen bg-gray-100 overflow-y-hidden">
+        <div className="max-w-md md:rounded-lg  w-full h-full md:h-4/5 flex flex-col">
+          <div className="flex-grow w-full flex flex-col justify-between bg-white rounded-lg overflow-y-scroll no-scrollbar">
             <div
               ref={chatContainerRef}
               className="flex-grow w-full overflow-y-scroll no-scrollbar"
@@ -225,7 +212,7 @@ export default function Page() {
                                   rel="noopener noreferrer"
                                   key={index}
                                 >
-                                  <div className="w-[180px] flex flex-col justify-between h-[130px] border-0 hover:border-2 hover:border-[#EDD072] bg-white hover:bg-[#FCF6E1] rounded-xl p-4">
+                                  <div className="w-[180px] flex flex-col justify-between h-[130px] border-0 hover:border-2 hover:border-[#EDD072] bg-gray-100 hover:bg-[#FCF6E1] rounded-xl p-4">
                                     <h2 className="text-medium text-[#17191C]">
                                       {item.title}
                                     </h2>
@@ -264,32 +251,6 @@ export default function Page() {
                           </div>
                         </div>
                       )}
-
-                      <div className="flex flex-col gap-2">
-                        {message.resources &&
-                          message.resources.map((item, index) => (
-                            <div
-                              key={index}
-                              className="flex flex-col justify-start bg-[#F5F5F5] rounded-2xl p-4 gap-2"
-                            >
-                              <h2 className="text-[#17191C] text-medium font-semibold">
-                                {item.Name}
-                              </h2>
-                              <div>{item.Address}</div>
-                              <div className="text-[#8870E5] font-semibold">
-                                📞 - {item.Contacts}
-                              </div>
-                              {/* <Link
-                              href={item.Links || ""}
-                              target="_blank"
-                              className="text-[#8870E5] font-semibold"
-                            >
-                              🌎 - {hostName(item.Links || "", false)}
-                            </Link> */}
-                              {/* <div>📧</div> */}
-                            </div>
-                          ))}
-                      </div>
 
                       {message.options && message.options.length !== 0 && (
                         <div className="mt-2 w-full flex flex-col gap-2">

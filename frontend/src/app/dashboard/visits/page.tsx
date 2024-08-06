@@ -1,5 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 'use client';
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import {
@@ -16,13 +16,10 @@ import { showHistory } from '@/lib/features/dashboard/pollsSlice';
 import {
   getPatientHisory,
   appendData,
-  sendDetailedData,
-  uploadData,
   generateSummary,
 } from '@/app/api/patients/history';
-import { speakerConfig } from '@/app/config/config';
+import { speakerConfig } from '../../../../config/config';
 import useAutosizeTextArea from '../components/useAutosizeTextArea';
-import Loader from '@/app/components/Loader';
 import { HistoryItem } from '@/app/types/Visit_Types';
 import { newPatient } from '@/lib/features/dashboard/pollsSlice';
 import { setAllHistory } from '@/lib/features/history/allHistorySlice';
@@ -39,7 +36,7 @@ interface TranscriptionData {
   prev: PrevItem[];
 }
 
-const Page = () => {
+export default function Page() {
   const pollsSlice = useSelector((state: RootState) => state.polls);
   const allHistorySlice = useSelector((state: RootState) => state.allHistory);
   const [data, setData] = useState(['']);
@@ -588,6 +585,4 @@ const Page = () => {
       <Patient />
     </React.Fragment>
   );
-};
-
-export default Page;
+}
