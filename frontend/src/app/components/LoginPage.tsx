@@ -33,7 +33,7 @@ const LoginPage = () => {
       if (response?.status === 200) {
         if (response?.data.access_token != null) {
           localStorage.setItem('access_token', response.data.access_token);
-          window.location.href = '/dashboard';
+          window.location.href = '/dashboard/visits';
         }
       }
     } catch (err) {
