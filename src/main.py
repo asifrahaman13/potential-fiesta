@@ -28,3 +28,14 @@ app.include_router(pateiend_router, prefix="/patient", tags=["users"])
 @app.get("/health")
 async def health_check():
     return JSONResponse(status_code=200, content={"status": "healthy"})
+
+
+@app.get("/")
+async def health_check():
+    return JSONResponse(status_code=200, content={"status": "healthy"})
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(app)
