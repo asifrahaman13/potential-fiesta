@@ -162,7 +162,10 @@ export default function Page() {
 
   return (
     <React.Fragment>
-      <div className="flex w-full flex-row justify-center items-center h-screen bg-gray-100 overflow-y-hidden">
+      <div className="flex w-full flex-col justify-center items-center h-full bg-gray-100 overflow-y-hidden">
+        <div>
+          <div className="p-4 font-semibold text-xl">Aldrax companion</div>
+        </div>
         <div className="max-w-md md:rounded-lg  w-full h-full md:h-4/5 flex flex-col">
           <div className="flex-grow w-full flex flex-col justify-between bg-white rounded-lg overflow-y-scroll no-scrollbar">
             <div
@@ -194,7 +197,7 @@ export default function Page() {
                       )}
                       {message.chatResponse && (
                         <div className="flex flex-col">
-                          <div className="bg-white text-Dark text-medium p-2 px-4 rounded-3xl max-w-[80%]">
+                          <div className="bg-gray-100 text-medium p-2 px-4 rounded-3xl max-w-[80%]">
                             {message.chatResponse}
                           </div>
                         </div>
