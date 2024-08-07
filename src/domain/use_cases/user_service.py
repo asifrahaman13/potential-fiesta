@@ -94,3 +94,23 @@ class UserService(UserInterface):
             )
         except KeyError:
             return None
+
+    def update_details(self, data: Any):
+        try:
+
+            update_summary = self.database_repository.update_document(
+                "visitId", data["visitId"], "summary", data["summary"], "patient_data"
+            )
+            update_details = self.database_repository.update_document(
+                "visitId",
+                data["visitId"],
+                "details",
+                data["details"],
+                "patient_data",
+            )
+            if update_details and update_summary is not None:
+                return True
+
+        except Exception as e:
+
+            return False

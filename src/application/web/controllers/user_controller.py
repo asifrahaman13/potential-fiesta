@@ -2,13 +2,14 @@ from fastapi import Depends, HTTPException, status
 from src.domain.interfaces.user_interface import UserInterface
 from fastapi.security import OAuth2PasswordBearer
 from datetime import timedelta
-from src.domain.entities.user import UserBase, UserData, PatientData, PatientDataUpdate
+from src.domain.entities.user import UserBase, UserData, PatientData, PatientDataSummary
 from src.domain.interfaces.auth_interface import AuthInterface
 from src.domain.entities.chat import Summary
 from fastapi import APIRouter
 from src.infastructure.exceptions.exceptions import HttePrequestErrors
 from src.domain.entities.chat import QrData
-from exports.exports import get_auth_service, get_chat_service, get_user_service
+from exports.exports import get_auth_service, get_user_service
+
 
 user_controller = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -191,9 +192,9 @@ async def get_summary(
         return HttePrequestErrors.not_found()
 
 
-@user_controller.post("/update-transcript")
+@user_controller.post("/update")
 async def update_transcript(
-    patient: PatientDataUpdate,
+    patient: PatientDataSummary,
     current_user: str = Depends(get_current_user),
     auth_interface: AuthInterface = Depends(get_auth_service),
     user_interface: UserInterface = Depends(get_user_service),
@@ -203,14 +204,13 @@ async def update_transcript(
     if user == False:
         return HttePrequestErrors.unauthorized()
     try:
-        update_data = user_interface.update_transctiption(
-            patient["visitId"], patient["details"], patient["summary"]
-        )
-        return update_data
+        update_data = user_interface.update_details(patient)
+        if update_data is True:
+            return {"status": 200, "message": "updated"}
+        return HttePrequestErrors.internal_server_error()
 
     except Exception as e:
-        print(e)
-    return False
+        return False
 
 
 @user_controller.post("/create-qr")
@@ -239,9 +239,9 @@ async def get_all_patients(
     auth_interface: AuthInterface = Depends(get_auth_service),
     user_interface: UserInterface = Depends(get_user_service),
 ):
-    print(current_user)
+
     user = auth_interface.get_current_user(current_user)
-    print(user)
+
     if user == False:
         return HttePrequestErrors.unauthorized()
     try:

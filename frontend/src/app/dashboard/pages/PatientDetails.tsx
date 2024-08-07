@@ -58,52 +58,52 @@ const PatientDetail: React.FC<PatientDetailProps> = ({ patient }) => {
         <strong>Health Data Points:</strong>
       </p>
       <ul className="ml-4 list-disc text-gray-600 mb-2">
-        {patient?.data.map((dataPoint: any, index: number) => (
+        {patient?.data?.map((dataPoint: any, index: number) => (
           <li key={index}>
             <div>
               <strong>Timestamp:</strong>{' '}
-              {new Date(dataPoint.timestamp * 1000).toLocaleString()}
+              {new Date(dataPoint?.timestamp * 1000).toLocaleString()}
             </div>
-            {dataPoint.systol_blood_pressure && (
+            {dataPoint?.systol_blood_pressure && (
               <div>Systolic BP: {dataPoint.systol_blood_pressure} mmHg</div>
             )}
-            {dataPoint.diastol_blood_pressure && (
-              <div>Diastolic BP: {dataPoint.diastol_blood_pressure} mmHg</div>
+            {dataPoint?.diastol_blood_pressure && (
+              <div>Diastolic BP: {dataPoint?.diastol_blood_pressure} mmHg</div>
             )}
-            {dataPoint.heart_rate && (
-              <div>Heart Rate: {dataPoint.heart_rate} bpm</div>
+            {dataPoint?.heart_rate && (
+              <div>Heart Rate: {dataPoint?.heart_rate} bpm</div>
             )}
-            {dataPoint.respiratory_rate && (
-              <div>Respiratory Rate: {dataPoint.respiratory_rate} bpm</div>
+            {dataPoint?.respiratory_rate && (
+              <div>Respiratory Rate: {dataPoint?.respiratory_rate} bpm</div>
             )}
-            {dataPoint.body_temperature && (
-              <div>Body Temperature: {dataPoint.body_temperature} °C</div>
+            {dataPoint?.body_temperature && (
+              <div>Body Temperature: {dataPoint?.body_temperature} °C</div>
             )}
-            {dataPoint.blood_temperature && (
-              <div>Blood Temperature: {dataPoint.blood_temperature} °C</div>
+            {dataPoint?.blood_temperature && (
+              <div>Blood Temperature: {dataPoint?.blood_temperature} °C</div>
             )}
-            {dataPoint.step_count && (
-              <div>Step Count: {dataPoint.step_count}</div>
+            {dataPoint?.step_count && (
+              <div>Step Count: {dataPoint?.step_count}</div>
             )}
-            {dataPoint.calories_burned && (
+            {dataPoint?.calories_burned && (
               <div>Calories Burned: {dataPoint.calories_burned}</div>
             )}
-            {dataPoint.distance_travelled && (
-              <div>Distance Travelled: {dataPoint.distance_travelled} km</div>
+            {dataPoint?.distance_travelled && (
+              <div>Distance Travelled: {dataPoint?.distance_travelled} km</div>
             )}
-            {dataPoint.sleep_duration && (
-              <div>Sleep Duration: {dataPoint.sleep_duration} hours</div>
+            {dataPoint?.sleep_duration && (
+              <div>Sleep Duration: {dataPoint?.sleep_duration} hours</div>
             )}
-            {dataPoint.water_consumed && (
+            {dataPoint?.water_consumed && (
               <div>Water Consumed: {dataPoint.water_consumed} L</div>
             )}
-            {dataPoint.caffeine_consumed && (
-              <div>Caffeine Consumed: {dataPoint.caffeine_consumed} mg</div>
+            {dataPoint?.caffeine_consumed && (
+              <div>Caffeine Consumed: {dataPoint?.caffeine_consumed} mg</div>
             )}
-            {dataPoint.alcohol_consumed && (
-              <div>Alcohol Consumed: {dataPoint.alcohol_consumed} mL</div>
+            {dataPoint?.alcohol_consumed && (
+              <div>Alcohol Consumed: {dataPoint?.alcohol_consumed} mL</div>
             )}
-            {dataPoint.weight && <div>Weight: {dataPoint.weight} kg</div>}
+            {dataPoint?.weight && <div>Weight: {dataPoint?.weight} kg</div>}
           </li>
         ))}
       </ul>
@@ -112,13 +112,13 @@ const PatientDetail: React.FC<PatientDetailProps> = ({ patient }) => {
       </p>
       <ul className="ml-4 list-disc text-gray-600 mb-2">
         <li>
-          <strong>MRN:</strong> {patient?.qr.mrn}
+          <strong>MRN:</strong> {patient?.qr?.mrn}
         </li>
         <li>
-          <strong>URL:</strong> {patient?.qr.url}
+          <strong>URL:</strong> {patient?.qr?.url}
         </li>
         <li>
-          <strong>Password:</strong> {patient?.qr.password}
+          <strong>Password:</strong> {patient?.qr?.password}
         </li>
       </ul>
     </div>

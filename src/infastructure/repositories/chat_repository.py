@@ -171,15 +171,13 @@ class SummaryRepository:
             {
                 "role": "system",
                 "content": """You are a helpful assistant. Your job is to provide a detailed summary on the content provided by the user. Your response should be in the form of json response. The keys of the json data should be as follows: \n
-            - summmary
-            - subjective 
-            - objective 
-            - assessment
-            - plan
-            \n
-
-            
-        """,
+                - summmary
+                - subjective 
+                - objective 
+                - assessment
+                - plan
+                \n
+                """,
             }
         )
 
@@ -193,7 +191,7 @@ class SummaryRepository:
         completion = self._client.chat.completions.create(
             model=self._model,
             messages=messages,
-            max_tokens=1000,
+            max_tokens=3000,
             temperature=0.7,
         )
         raw_string = (

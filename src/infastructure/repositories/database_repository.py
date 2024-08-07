@@ -122,3 +122,22 @@ class DatabaseRepository:
         except Exception as e:
             logging.error(f"Failed to append data: {e}")
             return False
+
+    def update_document(
+        self,
+        find_field_name: str,
+        find_field_value: Any,
+        update_field_name: str,
+        new_values: Any,
+        collection_name: str,
+    ) -> None:
+
+        try:
+
+            query = {find_field_name: find_field_value}
+            update = {"$set": {update_field_name: new_values}}
+            collection = self.__database[collection_name]
+            result = collection.update_one(query, update)
+            return result
+        except Exception as e:
+            return None

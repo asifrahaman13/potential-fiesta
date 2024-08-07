@@ -140,7 +140,7 @@ async function confirmSave(
   console.log(access_token, patientId, details, summary_details);
   try {
     const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/update-transcript`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/update`,
       { visitId: patientId, details: details, summary: summary_details },
       {
         headers: {
@@ -150,54 +150,12 @@ async function confirmSave(
         },
       }
     );
-    if (response.status === 200) {
-      const upload_to_s3 = await axios.post(
-        `${process.env.NEXT_PUBLIC_AI_SECOND_BACKEND_URI}/uploads3`,
-        { patient_id: patientId },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            APISECRET: process.env.NEXT_PUBLIC_APISECRET,
-            Authorization: `Bearer ${access_token}`,
-          },
-        }
-      );
 
-      if (upload_to_s3.status === 200) {
-        return response;
-      }
-    }
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-async function uploadData(
-  access_token: string,
-  trasncription: string,
-  patientId: string
-) {
-  try {
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_AI_BACKEND_URL}/upload-files`,
-      {
-        transcription: trasncription,
-        secret_key: 'approved',
-        patient_id: patientId,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          APISECRET: process.env.NEXT_PUBLIC_APISECRET,
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    );
     if (response.status === 200) {
       return response;
     }
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    throw new Error(err);
   }
 }
 
@@ -267,8 +225,8 @@ async function generateSummary(
     if (response.status === 200) {
       return response;
     }
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    throw new Error(err);
   }
 }
 
@@ -278,7 +236,6 @@ export {
   saveData,
   appendData,
   confirmSave,
-  uploadData,
   getSummary,
   sendDetailedData,
   generateSummary,

@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Any, Dict
 from src.domain.entities.user import User
 from src.domain.entities.user import PatientData
 
@@ -42,4 +43,8 @@ class UserInterface(ABC):
 
     @abstractmethod
     def get_all_patients(self, doctor_username: str):
+        pass
+
+    @abstractmethod
+    def update_details(self, data: Any):
         pass

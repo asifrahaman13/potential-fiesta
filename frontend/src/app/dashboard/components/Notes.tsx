@@ -19,14 +19,15 @@ const Notes = ({ patientId }: Patient) => {
   async function ConfirmSave() {
     try {
       const access_token = localStorage.getItem('access_token') || '';
+      console.log(historySlice.summary, historySlice.details, patientId);
       const response = await confirmSave(
         access_token,
         patientId,
         historySlice.details,
         JSON.parse(JSON.stringify(historySlice.summary))
       );
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      throw new Error(error);
     }
   }
 

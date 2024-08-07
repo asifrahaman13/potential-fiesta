@@ -26,16 +26,6 @@ import { setAllHistory } from '@/lib/features/history/allHistorySlice';
 import axios from 'axios';
 import Patient from '../components/Patient';
 
-interface PrevItem {
-  privJson: string;
-  privSpeakerId: string;
-}
-
-interface TranscriptionData {
-  visitId: string;
-  prev: PrevItem[];
-}
-
 export default function Page() {
   const pollsSlice = useSelector((state: RootState) => state.polls);
   const allHistorySlice = useSelector((state: RootState) => state.allHistory);
@@ -56,11 +46,7 @@ export default function Page() {
   ) {
     await appendData(access_token, patientId, p);
   }
-  const [currSpeaker, setCurrSpeaker] = useState('');
-  const [t, setT] = useState<TranscriptionData>({
-    visitId: pollsSlice.patientDetails.visitId,
-    prev: [],
-  });
+
   const initializeSpeechRecognizer = async () => {
     try {
       if (!SpeechConfig) {
@@ -87,12 +73,7 @@ export default function Page() {
 
       const access_token = localStorage.getItem('access_token') || '';
       if (isRecording) {
-        conversationTranscriber.sessionStarted = function (s: any, e: any) {
-          setT((prev) => ({
-            ...prev,
-            visitId: pollsSlice.patientDetails.visitId,
-          }));
-        };
+        conversationTranscriber.sessionStarted = function (s: any, e: any) {};
         conversationTranscriber.sessionStopped = function (s: any, e: any) {
           conversationTranscriber.stopTranscribingAsync();
         };
@@ -105,24 +86,12 @@ export default function Page() {
           let newSpeakerId = parts.join('-');
           if (e.result.speakerId != 'Unknown') {
             console.log(`${newSpeakerId}: ${e.result.text}`);
-            setCurrSpeaker(newSpeakerId);
             setData((prev) => [...prev, `${newSpeakerId}: ${e.result.text}`]);
             AppendData(
               access_token,
               pollsSlice.patientDetails.visitId,
               `${newSpeakerId}: ${e.result.text}`
             );
-
-            setT((prev) => ({
-              ...prev,
-              prev: [
-                ...prev.prev,
-                {
-                  privJson: e.result.privJson,
-                  privSpeakerId: e.result.privSpeakerId,
-                },
-              ],
-            }));
           }
         };
 
@@ -171,12 +140,14 @@ export default function Page() {
 
     setIsRecording(false);
     stopClock();
-    conversationTranscriber.stopTranscribingAsync();
+    // try {
+    //   conversationTranscriber.stopTranscribingAsync();
+    // } catch (error: any) {
+    //   throw new Error(error);
+    // }
 
     try {
       const access_token = localStorage.getItem('access_token') || '';
-      // await sendDetailedData(access_token, t);
-      // await uploadData(access_token, data.join(","), pollsSlice.patientDetails.visitId);
       await generateSummary(
         access_token,
         pollsSlice.patientDetails.visitId,

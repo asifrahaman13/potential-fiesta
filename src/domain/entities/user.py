@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import Any, List, Optional
 
 
 class User(BaseModel):
@@ -104,3 +104,9 @@ class PatientDataUpdate(BaseModel):
     visitId: str | None = None
     details: List[str]
     summary: Summary | None = None
+
+
+class PatientDataSummary(BaseModel):
+    visitId: str
+    details: Any
+    summary: Any

@@ -36,7 +36,7 @@ export default function Page() {
         <>
           <h1 className="text-4xl font-semibold mb-8">Patients</h1>
           <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-screen-2xl w-full px-4">
-            {patients.map((patient, index) => (
+            {patients?.map((patient, index) => (
               <button
                 key={index}
                 className="bg-white rounded-lg shadow-lg w-full transition-transform transform hover:scale-105"
