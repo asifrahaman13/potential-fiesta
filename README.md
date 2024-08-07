@@ -1,5 +1,9 @@
 ## 📜 Adrax
 
+Note: before hitting the front end link please hit the following url and wait for 1 min: 
+
+https://potential-fiesta.onrender.com
+
 A full stack application to help doctors view the data of the patients(entered by them through chat process), take live transcription, summary and other details, generate graphs etc.
 
 🚀 Features:
