@@ -62,8 +62,13 @@ async def get_patient(
     patient_id: str,
     database_repository: DatabaseRepository = Depends(get_database_repository),
 ):
-    patient = database_repository.find_single_entity_by_field_name(
-        "patient_data", "user_id", patient_id
-    )
 
-    return patient["data"]
+    try:
+        patient = database_repository.find_single_entity_by_field_name(
+            "patient_data", "mrn", patient_id
+        )
+
+        return patient["data"]
+    except Exception as e:
+        logging.error(e)
+        return False

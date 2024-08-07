@@ -1,7 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import QRCode from 'qrcode.react';
-import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { ClientConfig, ServerConfig } from '../../../../config/config';
 
@@ -14,8 +13,7 @@ const QRCodeGenerator = ({ mrn }: QRCodeGeneratorProps) => {
   const [password, setRandomPassword] = useState<string>('');
 
   useEffect(() => {
-    const newUUID = uuidv4().replace(/-/g, '').substring(0, 10);
-    setUrl(ClientConfig()?.CLIENT_URL + '/patient/' + newUUID);
+    setUrl(ClientConfig()?.CLIENT_URL + '/patient/' + mrn);
     const randomPassword = Math.random().toString(36).slice(-8);
     console.log('randomPassword', randomPassword);
     setRandomPassword(randomPassword);
@@ -47,7 +45,7 @@ const QRCodeGenerator = ({ mrn }: QRCodeGeneratorProps) => {
 
   return (
     <React.Fragment>
-      <div className="flex justify-center items-center  bg-gray-100 ">
+      <div className="flex justify-center items-center h-full bg-gray-100 ">
         <div className="bg-white rounded-lg shadow-lg w-full">
           <div className="w-full flex justify-center items-center p-6">
             <div className="flex flex-col gap-4 w-full">

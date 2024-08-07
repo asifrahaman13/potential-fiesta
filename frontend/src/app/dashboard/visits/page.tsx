@@ -417,8 +417,8 @@ export default function Page() {
                   </div>
                   <div className="flex text-gray-400 gap-2">
                     <div>{pollsSlice.patientDetails.gender}</div>
-                    <div>{''}</div>|
-                    <div> 2469 Peachtree Ln, Atlanta, GA 30319</div>
+                    {/* <div>{''}</div>|
+                    <div> 2469 Peachtree Ln, Atlanta, GA 30319</div> */}
                   </div>
                   <div className="flex text-gray-400 gap-2">
                     <div>

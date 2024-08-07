@@ -98,8 +98,8 @@ const History: React.FC<PageProps> = ({ patientId, patientName }) => {
                     <div className="text-2xl font-medium">{patientName}</div>
                     <div className="flex text-gray-400 gap-2">
                       <div>{patientData.gender}</div>
-                      <div>{patientData.age}</div>|
-                      <div> 2469 Peachtree Ln, Atlanta, GA 30319</div>
+                      <div>{patientData.age}</div>
+                      {/* <div> 2469 Peachtree Ln, Atlanta, GA 30319</div> */}
                     </div>
                     <div className="flex text-gray-400 gap-2">
                       <div>
@@ -162,7 +162,9 @@ const History: React.FC<PageProps> = ({ patientId, patientName }) => {
 
               {header === 'notes' && <Notes patientId={patientId} />}
               {header == 'qr-code' && <QrCode mrn={patientData.mrn} />}
-              {header == 'patient_data' && <PatientGraphs />}
+              {header == 'patient_data' && (
+                <PatientGraphs mrn={patientData.mrn} />
+              )}
             </div>
             <div
               className={` w-full xl:w-1/3 bg-white p-4   no-scrollbar overflow-y-auto p-b-8 mb-12 flex flex-col gap-4`}

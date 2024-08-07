@@ -13,6 +13,7 @@ import {
 import 'chartjs-adapter-date-fns';
 import { HealthData } from '@/app/types/Dashboard_Types';
 import { metricInfo } from '@/app/types/Dashboard_Types';
+import { useDispatch } from 'react-redux';
 
 Chart.register(
   LineElement,
@@ -23,8 +24,13 @@ Chart.register(
   Filler
 );
 
-const DataScreen: React.FC = () => {
+type DataScreenProps = {
+  mrn: string;
+};
+
+const DataScreen: React.FC<DataScreenProps> = ({ mrn }) => {
   const [healthData, setHealthData] = React.useState<HealthData[]>([]);
+  const dispatch = useDispatch();
   const [dataState, setDataState] = React.useState<
     'loading' | 'loaded' | 'error' | null
   >(null);
@@ -40,7 +46,7 @@ const DataScreen: React.FC = () => {
           console.log('Getting general health metrics');
           const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
           const response = await axios.get(
-            `${backendUrl}/patient/patient-graphs/user`
+            `${backendUrl}/patient/patient-graphs/${mrn}`
           );
           if (response?.status === 200) {
             console.log(
@@ -57,7 +63,7 @@ const DataScreen: React.FC = () => {
     };
 
     getGeneralMetrics();
-  }, [dataState]);
+  }, [dataState, dispatch, mrn]);
 
   const extractLabels = (data: HealthData[]): string[] => {
     return data

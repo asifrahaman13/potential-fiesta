@@ -107,7 +107,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 
   return (
     <div className="flex flex-col h-screen items-center bg-gray-100">
-      <div className="w-full max-w-4xl bg-white h-full rounded-lg shadow-lg p-6 overflow-hidden">
+      <div className="w-full max-w-4xl bg-white h-full rounded-lg shadow-lg p-6 overflow-scroll">
         <div className="flex justify-center mb-4">
           <h1 className="text-3xl font-bold text-blue-600">{slug}</h1>
         </div>

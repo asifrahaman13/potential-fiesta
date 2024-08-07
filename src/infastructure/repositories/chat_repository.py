@@ -47,6 +47,7 @@ class HealthAssistant:
                 {
                     "role": "system",
                     "content": """You are a helpful and friendly assistant. Your job is to extract the details from the user provided data and format that into json. Only give the json response. There should be keys and values. No need to give any form of units. If any value is not provided just make the value as 0. The keys should be as follows:  \n
+                    - weight
                     - systol_blood_pressure
                     - diastol_blood_pressure
                     - heart_rate
@@ -62,7 +63,7 @@ class HealthAssistant:
                         
                         Examples: 
 
-                        {
+                        {   "wight": 70,
                             "systol_blood_pressure": 120,
                             "diastol_blood_pressure": 80,
                             "heart_rate": 72,
