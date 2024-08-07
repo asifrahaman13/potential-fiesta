@@ -15,16 +15,13 @@ Move to the backend directory
 cd potential-fiesta/
 ```
 
-Next create and activate the virtual environment. 
+You can create vitual environment using poetry shell. It is not madnatory but recommended.
 
 ```
-virtualenv .venv
-source .venv/bin/activate
+poetry config virtualenvs.in-project true
 ```
-Install the necessary packages and dependencies
-
 ```
-pip install -r requirements.txt
+poetry shell
 ```
 
 Create the .env file and give the necessary API Keys.
@@ -33,10 +30,23 @@ Create the .env file and give the necessary API Keys.
 cp .env.example .env
 ```
 
+Now install the necessary dependencies and packages.
+
+```
+poetry install
+```
+
+Make sure you have black and pre-commit hook installed.
+
+```
+poetry add pre-commit
+pre-commit install
+```
+
 Now run the backend 
 
 ```
-uvicorn src.main:app --reload
+poetry run vicorn src.main:app --reload
 ```
 
 ## Front end 
